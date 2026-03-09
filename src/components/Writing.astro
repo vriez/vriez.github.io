@@ -1,0 +1,152 @@
+---
+const posts = [
+  {
+    category: 'Research Essay',
+    title: 'Towards an ImageNet Moment for Handwritten Text Recognition',
+    description: 'An analysis of what it would take to democratize handwritten OCR: the datasets, architectures, and engineering decisions that could bring HTR to every developer\'s toolkit.',
+    date: '2026',
+    href: '/writing/towards-imagenet-moment-handwritten-ocr/',
+  },
+  {
+    category: 'Conference',
+    title: 'Atlas: Autonomous Decision-Making for Crisis Management',
+    description: 'Presented at Language & Intelligence 2025, Austrian Parliament. Human-in-the-loop AI for risk and crisis response.',
+    date: '2025',
+  },
+  {
+    category: 'Research',
+    title: 'Text Mining, AI and Applications in Biotechnology',
+    description: 'MSc thesis exploring the intersection of AI knowledge graphs and biotechnology research. Published at UFSCar.',
+    date: '2024',
+  },
+  {
+    category: 'Research',
+    title: 'Magnetoelectric Multiferroic PbO-free Composites',
+    description: 'BSc research on synthesis and characterization of novel magnetoelectric materials. Published at UFSCar.',
+    date: '2015',
+  },
+];
+---
+
+<section class="writing" id="writing">
+  <div class="container">
+    <div class="writing-header fade-in">
+      <p class="section-label">Writing & Publications</p>
+      <h2 class="section-title">Ideas & research</h2>
+      <p class="section-subtitle">
+        Publications, conference presentations, and thoughts on AI, systems, and engineering.
+      </p>
+    </div>
+    <div class="posts-list">
+      {posts.map((post, i) => (
+        <article class="post-item fade-in" style={`transition-delay: ${i * 0.1}s`}>
+          <div class="post-meta">
+            <span class="post-category">{post.category}</span>
+            <span class="post-date">{post.date}</span>
+          </div>
+          <h3 class="post-title">
+            {post.href ? <a href={post.href}>{post.title}</a> : post.title}
+          </h3>
+          <p class="post-description">{post.description}</p>
+        </article>
+      ))}
+    </div>
+    <div class="writing-note fade-in">
+      <p>More essays and notes coming soon. This section will grow into a digital garden of ideas on AI systems, autonomous decision-making, and engineering leadership.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .writing {
+    padding: var(--section-padding);
+    background: var(--color-bg-warm);
+  }
+
+  .writing-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .post-item {
+    padding: 1.75rem 0;
+    border-bottom: 1px solid var(--color-border);
+    transition: all 0.2s;
+    cursor: default;
+  }
+
+  .post-item:first-child {
+    padding-top: 0;
+  }
+
+  .post-item:hover .post-title {
+    color: var(--color-accent);
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .post-category {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    background: var(--color-accent-glow);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+  }
+
+  .post-date {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .post-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    margin-bottom: 0.5rem;
+    transition: color 0.2s;
+  }
+
+  .post-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .post-title a:hover {
+    color: var(--color-accent);
+  }
+
+  .post-description {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    max-width: 700px;
+  }
+
+  .writing-note {
+    margin-top: 2.5rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--color-bg-card);
+    border: 1px dashed var(--color-border);
+    border-radius: 8px;
+  }
+
+  .writing-note p {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+</style>

@@ -1,0 +1,61 @@
+---
+const metrics = [
+  { value: '10+', label: 'Years Experience' },
+  { value: '5', label: 'Countries' },
+  { value: '25+', label: 'Engineers Led' },
+  { value: '6+', label: 'Industries' },
+];
+---
+
+<section class="metrics">
+  <div class="metrics-inner">
+    {metrics.map((m) => (
+      <div class="metric">
+        <span class="metric-value">{m.value}</span>
+        <span class="metric-label">{m.label}</span>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .metrics {
+    background: var(--color-bg-dark-alt);
+    border-top: 1px solid var(--color-border-dark);
+    border-bottom: 1px solid var(--color-border-dark);
+    padding: 3rem 2rem;
+  }
+
+  .metrics-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .metric-value {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .metric-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-muted-light);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  @media (max-width: 640px) {
+    .metrics-inner {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

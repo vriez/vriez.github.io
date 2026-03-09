@@ -1,0 +1,507 @@
+---
+import Post from '../../layouts/Post.astro';
+---
+
+<Post
+  title="Towards an ImageNet Moment for Handwritten Text Recognition"
+  description="An analysis of what it would take to democratize handwritten OCR: the datasets, architectures, and engineering decisions that could bring HTR to every developer's toolkit."
+  date="March 2026"
+  readTime="22 min read"
+  category="Research Essay"
+>
+
+<p>
+  In 2012, AlexNet's victory in the ImageNet Large Scale Visual Recognition Challenge marked a turning point for computer vision. Not because deep learning was invented that year, but because a convergence of factors &mdash; available data, affordable compute, reproducible training, and accessible tooling &mdash; suddenly made it possible for <em>anyone</em> with a GPU to build competitive image classifiers. That convergence has since repeated in other ML subfields: object detection had its moment with YOLO, machine translation with the Transformer, speech-to-text with wav2vec 2.0 and Whisper.
+</p>
+
+<p>
+  Handwritten Text Recognition (HTR) has not had its ImageNet moment yet. And this matters more than most people realize.
+</p>
+
+<p>
+  There are an estimated <strong>400 billion</strong> handwritten pages in archives, government offices, hospitals, and legal systems worldwide that remain digitally inaccessible. Historical manuscripts, medical prescriptions, legal documents, census records, field notes &mdash; an enormous corpus of human knowledge locked behind the variability of human penmanship. The organizations that need HTR most &mdash; small archives, clinics, municipal governments &mdash; are precisely the ones that cannot afford commercial solutions or train custom models.
+</p>
+
+<p>
+  This essay examines what conditions must be met for HTR to become truly democratized, surveys the current state of the field, and proposes a set of engineering ideas drawn from production experience that could help close the gap. It is written from the perspective of someone who has built OCR systems in production &mdash; including <a href="#rl-approach">reinforcement learning approaches to document processing</a> &mdash; and has felt the friction firsthand between what works in papers and what works in the real world.
+</p>
+
+<hr />
+
+<h2>What would an ImageNet moment look like?</h2>
+
+<p>
+  Following the framework Alexander Veysov used for <a href="https://thegradient.pub/towards-an-imagenet-moment-for-speech-to-text/">speech-to-text</a>, we can define five conditions that must hold simultaneously for an "ImageNet moment" in handwritten OCR:
+</p>
+
+<ol>
+  <li><strong>A large, diverse, open dataset</strong> covering multiple scripts, writing styles, historical periods, and document types. The HTR equivalent of ImageNet or LibriSpeech.</li>
+  <li><strong>An architecture that generalizes</strong> across writers, scripts, and degradation conditions without per-writer fine-tuning.</li>
+  <li><strong>Training on commodity hardware.</strong> If you need 8&times;A100s, it's not democratized. The target is 1&ndash;2 consumer GPUs, trainable in days, not weeks.</li>
+  <li><strong>Good out-of-the-box inference.</strong> A pretrained model that works "well enough" on unseen handwriting without any fine-tuning.</li>
+  <li><strong>Accessible tooling.</strong> A clean API, pip-installable, with documentation that doesn't require a PhD to follow.</li>
+</ol>
+
+<p>
+  Let's evaluate where we stand on each.
+</p>
+
+<hr />
+
+<h2>The data landscape</h2>
+
+<p>
+  The most striking difference between HTR and other ML subfields is the <em>poverty of data</em>. Consider the scale disparity:
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Domain</th>
+      <th>Landmark Dataset</th>
+      <th>Scale</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Image classification</td>
+      <td>ImageNet</td>
+      <td>14M images, 21k classes</td>
+    </tr>
+    <tr>
+      <td>Speech-to-text</td>
+      <td>LibriSpeech / Common Voice</td>
+      <td>960h / 19,000h+</td>
+    </tr>
+    <tr>
+      <td>Machine translation</td>
+      <td>WMT datasets</td>
+      <td>Billions of sentence pairs</td>
+    </tr>
+    <tr>
+      <td>Handwritten text</td>
+      <td>IAM Handwriting Database</td>
+      <td>~13,000 lines from 657 writers</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+  The IAM dataset, published in 2002, remains the <em>de facto</em> benchmark for English handwriting recognition &mdash; over two decades later. 657 writers. 13,353 text lines. That is <strong>three orders of magnitude</strong> smaller than what drove breakthroughs in other domains.
+</p>
+
+<details>
+  <summary>Click to expand: Overview of major HTR datasets</summary>
+  <div>
+    <p>
+      <strong>IAM Handwriting Database</strong> (Marti & Bunke, 2002) &mdash; 1,539 scanned pages, 13,353 text lines, 115,320 words from 657 writers. English. The most cited HTR benchmark.
+    </p>
+    <p>
+      <strong>RIMES</strong> (Augustin et al., 2006) &mdash; 12,723 pages of French handwritten letters from ~1,300 volunteers. Used primarily for French HTR.
+    </p>
+    <p>
+      <strong>CVL Database</strong> (Kleber et al., 2013) &mdash; 310 documents from 27 writers. 83 pages in English, 227 in German.
+    </p>
+    <p>
+      <strong>Bentham Collection</strong> (Sanchez et al., 2014) &mdash; Historical manuscripts from Jeremy Bentham. ~11,000 text lines. Important for historical document recognition.
+    </p>
+    <p>
+      <strong>Washington & Parzival</strong> &mdash; Historical collections (George Washington's letters; medieval German manuscripts). Small but important for cross-domain evaluation.
+    </p>
+    <p>
+      <strong>HisDoc</strong> (Simistira et al., 2016) &mdash; Document layout analysis and recognition for historical manuscripts.
+    </p>
+    <p>
+      <strong>CSER / IIIT-HW</strong> &mdash; Hindi and other Indic script datasets. Smaller scale, but critical for non-Latin script research.
+    </p>
+    <p>
+      <strong>TextOCR, HierText</strong> (Singh et al., 2021; Long et al., 2022) &mdash; Scene text in the wild, including some handwritten samples. Large scale but not handwriting-focused.
+    </p>
+    <p>
+      The total volume of <em>publicly available, well-annotated</em> handwritten text line images is roughly 150,000&ndash;200,000 lines across all major datasets combined. For comparison, LibriSpeech's 960 hours of audio corresponds to roughly 280,000 utterances &mdash; and that was considered the <em>small</em> benchmark.
+    </p>
+  </div>
+</details>
+
+<p>
+  The fundamental problem isn't just scale &mdash; it's <strong>diversity</strong>. The IAM dataset was collected from English-speaking adults writing in a controlled setting with a specific pen type. This is approximately zero percent of the handwriting that exists in the wild: doctor's notes scrawled in haste, centuries-old manuscripts with ink bleed, children's homework, multilingual forms filled in at border crossings, faded field notes from the 1800s.
+</p>
+
+<p>
+  There have been efforts to synthesize handwritten data. Alonso et al. (2019) used adversarial training to generate handwriting, and more recently diffusion models have shown promise for style-conditioned text image generation. But synthetic data has a well-documented domain gap problem: models trained primarily on synthetic handwriting consistently underperform when evaluated on real-world samples, particularly on degraded or historical documents.
+</p>
+
+<blockquote>
+  <p>
+    The handwriting recognition community has been trying to solve a problem with 200,000 labeled samples that other fields solved with 200 million. The surprising thing is not that HTR isn't solved &mdash; it's that it works as well as it does.
+  </p>
+</blockquote>
+
+<hr />
+
+<h2>A brief history of architectures</h2>
+
+<p>
+  The evolution of HTR architectures follows a pattern familiar to anyone who has watched a machine learning subfield mature. Here is a compressed timeline:
+</p>
+
+<h3>The pre-deep-learning era (pre-2014)</h3>
+
+<p>
+  Early approaches relied on explicit feature engineering: Histograms of Oriented Gradients (HOG), geometric moment features, and hand-designed stroke descriptors fed into Hidden Markov Models (HMMs) or SVMs. These systems required careful preprocessing &mdash; binarization, slant correction, baseline estimation &mdash; and were brittle to variations in writing style, ink quality, and page degradation.
+</p>
+
+<p>
+  The dominant paradigm was <strong>segmentation-based recognition</strong>: segment characters first, then classify them individually. This worked reasonably well for printed text but fell apart for handwriting, where characters are connected, overlapping, and ambiguous in isolation.
+</p>
+
+<h3>The CTC revolution (2014&ndash;2019)</h3>
+
+<p>
+  The key breakthrough came from borrowing an idea from speech recognition: <strong>Connectionist Temporal Classification (CTC)</strong> loss, introduced by Graves et al. (2006) for speech but applied to handwriting by Shi, Bai, and Yao in their 2015 CRNN architecture. CTC eliminated the need for character-level segmentation by learning a monotonic alignment between the input image and the output text sequence.
+</p>
+
+<p>
+  The dominant architecture became a <strong>CNN encoder + Bidirectional LSTM + CTC decoder</strong>:
+</p>
+
+<ol>
+  <li>A CNN (typically VGG-like or ResNet) extracts visual features from the text line image.</li>
+  <li>Feature maps are sliced into columns (the "time" dimension).</li>
+  <li>A bidirectional LSTM models sequential dependencies.</li>
+  <li>CTC loss enables training without character-level alignment labels.</li>
+</ol>
+
+<p>
+  This architecture &mdash; in various configurations &mdash; dominated HTR benchmarks from 2015 to roughly 2020 and remains surprisingly competitive. On IAM, well-tuned CNN+LSTM+CTC models achieve Character Error Rates (CER) of 4&ndash;6%.
+</p>
+
+<details>
+  <summary>Click to expand: Why CTC matters for handwriting</summary>
+  <div>
+    <p>
+      In handwriting recognition, the same letter can take radically different visual forms depending on context (the <em>a</em> in "cat" looks different from the <em>a</em> in "banana"), and character boundaries are almost never clearly defined. CTC handles this elegantly by:
+    </p>
+    <ul>
+      <li>Allowing the model to output a "blank" token when no character is present at a position</li>
+      <li>Collapsing repeated characters (so "hh-ee-ll-ll-oo" becomes "hello")</li>
+      <li>Marginalizing over all possible alignments during training</li>
+    </ul>
+    <p>
+      This means you only need the text transcription as a label &mdash; no bounding boxes around individual characters. This dramatically reduces annotation cost and is a major reason CTC-based models remain practical for real-world deployment.
+    </p>
+  </div>
+</details>
+
+<h3>Attention and transformers (2019&ndash;present)</h3>
+
+<p>
+  Attention-based sequence-to-sequence models, successful in machine translation, were adapted for HTR starting around 2018&ndash;2019. Instead of CTC's monotonic alignment assumption, attention mechanisms learn to "look at" relevant parts of the image when predicting each output character.
+</p>
+
+<p>
+  The pivotal model is <strong>TrOCR</strong> (Li et al., 2023, Microsoft), which applies a pure Transformer architecture to OCR: a Vision Transformer (ViT) encoder processes the image, and a Transformer decoder generates the text. TrOCR achieved state-of-the-art results on IAM (CER ~2.7% at the word level) by leveraging large-scale pretraining on synthetic printed text before fine-tuning on handwriting.
+</p>
+
+<p>
+  More recently, Google's <strong>PaLI</strong> and similar vision-language models have shown that massive multimodal pretraining can yield very strong OCR capabilities as a side effect, though these models are far too large (billions of parameters) for practical deployment in resource-constrained settings.
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Architecture</th>
+      <th>IAM CER (%)</th>
+      <th>Parameters</th>
+      <th>Year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CRNN + CTC</td>
+      <td>CNN+LSTM+CTC</td>
+      <td>~5.5</td>
+      <td>~8M</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <td>Bluche et al.</td>
+      <td>MDLSTM + CTC</td>
+      <td>~3.2</td>
+      <td>~15M</td>
+      <td>2017</td>
+    </tr>
+    <tr>
+      <td>Flor et al.</td>
+      <td>CNN+LSTM+CTC</td>
+      <td>~4.1</td>
+      <td>~10M</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <td>TrOCR-base</td>
+      <td>ViT+Transformer</td>
+      <td>~3.4</td>
+      <td>~334M</td>
+      <td>2023</td>
+    </tr>
+    <tr>
+      <td>TrOCR-large</td>
+      <td>ViT+Transformer</td>
+      <td>~2.7</td>
+      <td>~558M</td>
+      <td>2023</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+  Notice the trade-off: Transformer models achieve lower error rates but require <strong>40&ndash;70x more parameters</strong> than CTC-based models. For deployment on edge devices, mobile, or in resource-constrained environments &mdash; which describes most of the organizations that need HTR &mdash; this is a serious concern.
+</p>
+
+<hr />
+
+<h2 id="rl-approach">Idea: Reinforcement learning for OCR</h2>
+
+<p>
+  One approach I explored in production at Formbay was using <strong>reinforcement learning to train OCR agents</strong> for document processing. The motivation was pragmatic: we were dealing with energy certificate documents that had mixed printed and handwritten fields, inconsistent layouts, and degradation from scanning. Standard pipeline approaches (detect field &rarr; crop &rarr; recognize) were brittle because errors cascaded through the pipeline.
+</p>
+
+<div class="idea-block">
+  <div class="idea-number">Key Idea</div>
+  <h4>Frame document OCR as a sequential decision problem</h4>
+  <p>
+    Instead of treating OCR as a purely supervised learning task (image &rarr; text), model it as an agent that <em>navigates</em> the document: deciding where to look, what to read, and how to integrate context from previously read fields. The agent receives a reward signal based on the accuracy of the extracted information and the efficiency of its reading path.
+  </p>
+</div>
+
+<p>
+  The core architecture combined a CNN-based visual encoder with an RL policy network that made three types of decisions at each step:
+</p>
+
+<ol>
+  <li><strong>Attend:</strong> Where in the document to focus next (a spatial attention action).</li>
+  <li><strong>Read:</strong> What text to extract from the current focus region (delegated to a frozen CTC-based recognizer).</li>
+  <li><strong>Validate:</strong> Whether the extracted text is consistent with previously extracted fields and expected document schema.</li>
+</ol>
+
+<details>
+  <summary>Click to expand: Why RL instead of pure supervised learning?</summary>
+  <div>
+    <p>
+      The standard OCR pipeline treats each field independently: detect bounding box, crop, recognize text. But handwritten documents have structure. A date field constrains what a nearby reference number might be. A signature location implies where the printed name should appear. Field-level recognition accuracy of 92% sounds good until you realize that a form with 15 fields has a 28% chance of at least one error (<code>1 - 0.92^15 &asymp; 0.72</code> probability of all correct).
+    </p>
+    <p>
+      RL lets the agent <em>learn</em> these structural relationships from experience. The reward function penalizes not just character-level errors but document-level inconsistencies: dates that don't parse, reference numbers with wrong check digits, totals that don't sum. This is information that exists in the document but that standard OCR pipelines throw away.
+    </p>
+    <p>
+      The key insight: the <strong>reading order</strong> matters. By choosing which fields to read first, the agent can use high-confidence extractions to constrain and correct low-confidence ones. A supervised model can't learn this because the reading order isn't part of the training labels.
+    </p>
+  </div>
+</details>
+
+<p>
+  In practice, the RL-based system improved <strong>document-level accuracy</strong> (all fields correct) by 12&ndash;18% over the pipeline approach, while marginally reducing per-field accuracy. This is the right trade-off for production: you care about getting the whole document right, not individual characters. The system was deployed for processing energy certificates across regulatory jurisdictions in Australia.
+</p>
+
+<p>
+  The downsides were significant: RL training is unstable, requires careful reward shaping, and is much harder to debug than supervised learning. Training time was 3&ndash;4x longer. And the approach doesn't generalize easily &mdash; it requires a document-type-specific reward function.
+</p>
+
+<p>
+  Still, I believe the <strong>RL-as-reading-strategy</strong> idea has legs beyond the specific application. Any system that processes structured documents &mdash; medical forms, tax returns, insurance claims &mdash; could benefit from an agent that reasons about document structure rather than treating OCR as independent per-field classification.
+</p>
+
+<hr />
+
+<h2>Seven engineering ideas for practical HTR</h2>
+
+<p>
+  Having built OCR systems in production and followed the research closely, here are the engineering decisions I believe matter most for building a practical, deployable handwritten text recognizer today. These are not novel research contributions &mdash; they are the <em>engineering decisions</em> that separate a paper result from a working system.
+</p>
+
+<div class="idea-block">
+  <div class="idea-number">Idea 1</div>
+  <h4>Start with CTC, not attention</h4>
+  <p>
+    For production systems, especially on constrained hardware, CNN+LSTM+CTC is still the right starting point. It's 50x smaller than TrOCR, 10x faster at inference, and within 2&ndash;3 CER points on most benchmarks. Attention models are better at long sequences and complex scripts, but for Latin-script line-level recognition, CTC's simplicity is a feature. Reserve Transformer-based models for when you have the compute budget and the CTC baseline isn't good enough.
+  </p>
+</div>
+
+<div class="idea-block">
+  <div class="idea-number">Idea 2</div>
+  <h4>Invest in preprocessing, not just models</h4>
+  <p>
+    A surprising amount of production HTR performance comes from what happens <em>before</em> the model sees the image. Binarization (Sauvola or learned), deskewing, line segmentation, and contrast normalization can improve CER by 20&ndash;40% on degraded documents. The research community undervalues this because preprocessing isn't publishable. But in production, a good Sauvola binarization + deskew pipeline paired with a mediocre model often beats a state-of-the-art model on raw scans.
+  </p>
+</div>
+
+<div class="idea-block">
+  <div class="idea-number">Idea 3</div>
+  <h4>Line segmentation is the real bottleneck</h4>
+  <p>
+    Most HTR models assume pre-segmented text lines as input. In the real world, you start with a full page. Line segmentation for handwriting &mdash; where baselines curve, lines overlap, margins are inconsistent, and marginalia appears randomly &mdash; is an unsolved problem that accounts for a disproportionate share of end-to-end errors. Recent work on pixel-level baseline detection (Gruning et al., ARU-Net) is promising. But this remains the weakest link.
+  </p>
+</div>
+
+<div class="idea-block">
+  <div class="idea-number">Idea 4</div>
+  <h4>Use a language model as a post-processor, not a crutch</h4>
+  <p>
+    Beam search with a character or word-level language model can significantly reduce CER (often 15&ndash;30% relative improvement). But be careful: an overpowered language model will "hallucinate" plausible text that wasn't written. For historical documents or specialized vocabulary (medical, legal), generic language models actively hurt. The sweet spot is a lightweight n-gram model trained on domain-specific text, used to re-rank hypotheses rather than drive generation.
+  </p>
+</div>
+
+<div class="idea-block">
+  <div class="idea-number">Idea 5</div>
+  <h4>Augment aggressively, but realistically</h4>
+  <p>
+    Standard image augmentations (rotation, scaling, brightness) help, but handwriting-specific augmentations matter more: elastic distortion (simulating different writing pressures), ink color variation, background texture replacement, and &mdash; critically &mdash; <strong>line-level cut-and-paste</strong> where text fragments are recombined to create new training sentences. This last technique, borrowed from scene text recognition, can effectively triple your dataset without synthetic generation.
+  </p>
+</div>
+
+<div class="idea-block">
+  <div class="idea-number">Idea 6</div>
+  <h4>Pretrain on printed text, fine-tune on handwriting</h4>
+  <p>
+    This is TrOCR's key insight, but it applies to smaller models too. A CTC model pretrained on a large synthetic printed text dataset (easily generated with font rendering) and then fine-tuned on handwriting data consistently outperforms a model trained from scratch on handwriting alone. The visual features learned from printed text &mdash; stroke patterns, character shapes, word spacing &mdash; transfer well. We observed a 15&ndash;25% CER improvement from this approach on English handwriting with only 5,000 lines of fine-tuning data.
+  </p>
+</div>
+
+<div class="idea-block">
+  <div class="idea-number">Idea 7</div>
+  <h4>Expose uncertainty, don't hide it</h4>
+  <p>
+    Production OCR systems should output <strong>confidence scores per character and per word</strong>, not just the top-1 prediction. For document processing workflows, a field marked "low confidence" that routes to human review is worth more than a field that silently hallucinates. CTC's output probabilities make this straightforward. Attention models require more careful calibration but can also provide meaningful uncertainty estimates through entropy over the attention distribution.
+  </p>
+</div>
+
+<hr />
+
+<h2>What's still missing</h2>
+
+<p>
+  Let me return to the five conditions for an ImageNet moment and assess where we actually stand:
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Condition</th>
+      <th>Status</th>
+      <th>Gap</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Large open dataset</td>
+      <td>Not met</td>
+      <td>Need 10&ndash;50x more annotated handwriting data, diverse scripts and conditions</td>
+    </tr>
+    <tr>
+      <td>Generalizing architecture</td>
+      <td>Partially met</td>
+      <td>TrOCR generalizes well but is too large; CTC models are small but need per-domain fine-tuning</td>
+    </tr>
+    <tr>
+      <td>Commodity hardware training</td>
+      <td>Met (CTC) / Not met (Transformer)</td>
+      <td>CTC models train on a single GPU in hours; TrOCR requires multi-GPU clusters</td>
+    </tr>
+    <tr>
+      <td>Good zero-shot inference</td>
+      <td>Not met</td>
+      <td>No model works well out-of-the-box on arbitrary handwriting without fine-tuning</td>
+    </tr>
+    <tr>
+      <td>Accessible tooling</td>
+      <td>Partially met</td>
+      <td>Kraken, Calamari, EasyOCR exist but fragmented; no "Whisper for handwriting" yet</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+  The biggest gap is the first: <strong>data</strong>. Everything else is engineering. We know how to build good architectures, how to train efficiently, how to deploy. What we don't have is a large-scale, diverse, well-annotated handwriting dataset that covers the true distribution of handwriting in the world &mdash; not just English, not just modern, not just neat.
+</p>
+
+<h3>A path forward</h3>
+
+<p>
+  I believe the most promising path to an ImageNet moment for HTR combines three parallel efforts:
+</p>
+
+<ol>
+  <li>
+    <strong>A collaborative open dataset.</strong> Not one lab's collection, but a Common-Voice-style crowdsourced effort where archives, libraries, and individuals contribute scanned handwritten pages with transcriptions. Mozilla's Common Voice proved this model works for speech. The <a href="https://readcoop.eu/">READ-COOP</a> consortium in Europe is moving in this direction with Transkribus, but the data isn't fully open.
+  </li>
+  <li>
+    <strong>A mid-sized model with strong transfer.</strong> Something between CTC (&lt;10M params) and TrOCR (&gt;300M params) &mdash; perhaps 30&ndash;80M parameters &mdash; that can be pretrained on a combination of synthetic and printed text, then fine-tuned on handwriting with minimal data. Knowledge distillation from TrOCR to a smaller model is a promising direction that hasn't been fully explored.
+  </li>
+  <li>
+    <strong>End-to-end page-level models.</strong> The line segmentation bottleneck (Idea 3) can be addressed by training models that go directly from full page images to full page transcriptions. Recent work on Pix2Struct (Lee et al., 2023) and Donut (Kim et al., 2022) suggests this is feasible, though not yet competitive with pipeline approaches on handwriting specifically.
+  </li>
+</ol>
+
+<hr />
+
+<h2>Closing thoughts</h2>
+
+<p>
+  Handwritten text recognition is in a state similar to speech-to-text circa 2017&ndash;2018: the architectures are good enough, the engineering knowledge exists, but the ecosystem hasn't yet converged into the combination of data, models, and tools that makes the technology accessible to everyone who needs it.
+</p>
+
+<p>
+  The field's current trajectory &mdash; ever-larger Transformer models evaluated on ever-smaller benchmark datasets &mdash; is unlikely to produce that convergence. What's needed is a shift in focus from benchmark performance to <strong>real-world usability</strong>: models that work on degraded documents, that handle multiple scripts, that run on a laptop, that expose uncertainty, and that are trained on data that reflects the actual diversity of human handwriting.
+</p>
+
+<p>
+  The irony is that the tools to build this exist today. CTC models are simple and efficient. Transfer learning from printed text works. Preprocessing pipelines are well-understood. The missing piece is a community effort to assemble the data and the tooling &mdash; the unsexy infrastructure work that ImageNet, LibriSpeech, and Common Voice provided for their respective fields.
+</p>
+
+<p>
+  Four hundred billion handwritten pages are waiting. The ImageNet moment for handwriting recognition isn't a research problem. It's a coordination problem. And those are solvable.
+</p>
+
+<hr />
+
+<div class="footnotes-section">
+  <h3>Notes</h3>
+  <ol>
+    <li>CER figures are approximate and drawn from published results on the IAM test set. Direct comparison across papers is complicated by different train/test splits and preprocessing choices.</li>
+    <li>The RL-based OCR approach described was developed and deployed at Formbay (2019&ndash;2022) for energy certificate processing. Specific performance numbers are approximate due to confidentiality.</li>
+    <li>Parameter counts for older models are estimates based on published architecture descriptions.</li>
+    <li>The "400 billion pages" estimate is a rough extrapolation from digitization surveys by the Library of Congress and the European Archives Portal.</li>
+  </ol>
+</div>
+
+<div class="references-section">
+  <h3>Papers</h3>
+  <ul>
+    <li>Graves, A., et al. "Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks." ICML, 2006.</li>
+    <li>Shi, B., Bai, X., & Yao, C. "An End-to-End Trainable Neural Network for Image-based Sequence Recognition." IEEE TPAMI, 2017 (CRNN).</li>
+    <li>Bluche, T. "Joint Line Segmentation and Transcription for End-to-End Handwritten Paragraph Recognition." NeurIPS, 2016.</li>
+    <li>Li, M., et al. "TrOCR: Transformer-based Optical Character Recognition with Pre-trained Models." AAAI, 2023.</li>
+    <li>Kim, G., et al. "OCR-free Document Understanding Transformer (Donut)." ECCV, 2022.</li>
+    <li>Lee, K., et al. "Pix2Struct: Screenshot Parsing as Pretraining for Visual Language Understanding." ICML, 2023.</li>
+    <li>Alonso, E., et al. "Adversarial Generation of Handwritten Text Images Conditioned on Sequences." ICDAR, 2019.</li>
+    <li>Gruning, T., et al. "A Two-Stage Method for Text Line Detection in Historical Documents." IJDAR, 2019 (ARU-Net).</li>
+    <li>Marti, U.V. & Bunke, H. "The IAM-database: An English Sentence Database for Offline Handwriting Recognition." IJDAR, 2002.</li>
+    <li>Veysov, A. "Towards an ImageNet Moment for Speech-to-Text." The Gradient, 2020.</li>
+  </ul>
+</div>
+
+<div class="references-section">
+  <h3>Tools & Datasets</h3>
+  <ul>
+    <li>Kraken &mdash; Open-source HTR engine (kraken.re)</li>
+    <li>Calamari OCR &mdash; Line-based OCR engine with CTC (github.com/Calamari-OCR)</li>
+    <li>EasyOCR &mdash; Ready-to-use OCR with 80+ language support (github.com/JaidedAI/EasyOCR)</li>
+    <li>Transkribus &mdash; Platform for historical document recognition (readcoop.eu/transkribus)</li>
+    <li>IAM Handwriting Database &mdash; fki.tic.heia-fr.ch/databases/iam-handwriting-database</li>
+    <li>Mozilla Common Voice &mdash; commonvoice.mozilla.org</li>
+  </ul>
+</div>
+
+</Post>

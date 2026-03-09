@@ -1,0 +1,195 @@
+---
+const experiences = [
+  {
+    role: 'Head of Digital Innovation',
+    company: 'ZFRK',
+    location: 'Vienna, Austria',
+    period: '2025 - present',
+    description: 'Leading digital innovation research for crisis management. Created Atlas, an autonomous AI decision platform presented at the Austrian Parliament.',
+  },
+  {
+    role: 'Head of Innovation & R&D',
+    company: 'Coco Bambu',
+    location: 'Brasilia, Brazil',
+    period: '2023 - 2024',
+    description: 'Led AI transformation across 50+ restaurant locations. Built cross-functional team of 10+ engineers. Established first AI governance framework.',
+  },
+  {
+    role: 'Senior Engineer & Tech Lead',
+    company: 'Formbay',
+    location: 'Sydney, Australia',
+    period: '2019 - 2022',
+    description: 'Progressed to Tech Lead for fraud detection. Managed teams across 3 continents. Designed AI geoprocessing and OCR systems with Reinforcement Learning.',
+  },
+  {
+    role: 'Data Engineer',
+    company: 'RUBIX',
+    location: 'Melbourne, Australia',
+    period: '2018 - 2019',
+    description: 'Architected computer vision for infrastructure monitoring. Built road damage detection with Azure Custom Vision.',
+  },
+  {
+    role: 'Full Stack Engineer',
+    company: 'LINBIT',
+    location: 'Vienna, Austria',
+    period: '2016 - 2018',
+    description: 'Led technical modernization of enterprise application suite. Zero-downtime migrations and authentication architecture.',
+  },
+  {
+    role: 'DevOps Engineer & Co-Founder',
+    company: 'Matisis',
+    location: 'Sao Paulo, Brazil',
+    period: '2015 - 2019',
+    description: 'Co-founded strategic consulting platform. Designed core algorithms for market and environmental analysis.',
+  },
+];
+---
+
+<section class="experience" id="experience">
+  <div class="experience-inner">
+    <div class="container">
+      <div class="experience-header fade-in">
+        <p class="section-label section-label--light">Career</p>
+        <h2 class="section-title section-title--light">Experience</h2>
+        <p class="section-subtitle section-subtitle--light">
+          A decade of building and leading across 5 countries.
+        </p>
+      </div>
+      <div class="timeline">
+        {experiences.map((exp, i) => (
+          <div class="timeline-item fade-in" style={`transition-delay: ${i * 0.08}s`}>
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-meta">
+                <span class="timeline-period">{exp.period}</span>
+                <span class="timeline-location">{exp.location}</span>
+              </div>
+              <h3 class="timeline-role">{exp.role}</h3>
+              <p class="timeline-company">{exp.company}</p>
+              <p class="timeline-description">{exp.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .experience {
+    background: var(--color-bg-dark);
+  }
+
+  .experience-inner {
+    padding: var(--section-padding);
+  }
+
+  .experience-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .section-label--light {
+    color: var(--color-accent);
+  }
+
+  .section-title--light {
+    color: #fff;
+  }
+
+  .section-subtitle--light {
+    color: var(--color-text-muted-light);
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 8px;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-border-dark);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: 2.5rem;
+  }
+
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -2rem;
+    top: 8px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--color-bg-dark);
+    border: 2px solid var(--color-accent);
+    z-index: 1;
+  }
+
+  .timeline-item:first-child .timeline-dot {
+    background: var(--color-accent);
+    box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.4);
+  }
+
+  .timeline-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-period {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+
+  .timeline-location {
+    font-size: 0.8rem;
+    color: var(--color-text-muted-light);
+  }
+
+  .timeline-role {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.15rem;
+  }
+
+  .timeline-company {
+    font-size: 0.9rem;
+    color: var(--color-text-muted-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-description {
+    font-size: 0.85rem;
+    color: var(--color-text-muted-light);
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  @media (max-width: 768px) {
+    .timeline {
+      padding-left: 1.5rem;
+    }
+
+    .timeline-dot {
+      left: -1.5rem;
+    }
+
+    .timeline-meta {
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+  }
+</style>

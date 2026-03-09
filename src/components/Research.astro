@@ -1,0 +1,224 @@
+---
+const education = [
+  {
+    degree: 'Specialization in Aeronautical Systems',
+    institution: 'Escola de Engenharia de Sao Carlos (EESC), USP',
+    year: '2024 - present',
+    status: 'Ongoing',
+    focus: 'Real-time OODA loop engine for autonomous drones',
+    description: 'Embedded real-time decision systems for autonomous drones using Rust. Arduino and Pixhawk hardware with OODA Loop algorithms for autonomous flight control.',
+  },
+  {
+    degree: 'Master of Science in Biotechnology',
+    institution: 'Universidade Federal de Sao Carlos',
+    year: '2024',
+    status: 'Completed',
+    focus: 'AI RAG Knowledge Graphs',
+    description: 'Text Mining, Artificial Intelligence and Applications in Biotechnology. Supervisors: Prof. Dra. Ignez Caracelli & Prof. Dr. Julio Zukerman (BioMat Lab).',
+    publication: true,
+  },
+  {
+    degree: 'Bachelor of Science in Computational Physics',
+    institution: 'University of Sao Paulo (USP)',
+    year: '2015',
+    status: 'Completed',
+    focus: 'Magnetoelectric Multiferroic Composites',
+    description: 'Interdisciplinary program: Physics, Mathematics, Computer Science. Research on synthesis and characterization of PbO-free composites (GCFerr Lab).',
+    publication: true,
+  },
+];
+
+const researchAreas = [
+  'Autonomous Decision Systems',
+  'Knowledge Graphs & RAG',
+  'Computer Vision & OCR',
+  'Geospatial AI',
+  'Embedded Real-time Systems',
+  'Crisis Management AI',
+  'Multi-Agent UAV Systems',
+  'ML Governance & Compliance',
+];
+---
+
+<section class="research" id="research">
+  <div class="container">
+    <div class="research-header fade-in">
+      <p class="section-label">Research & Education</p>
+      <h2 class="section-title">Academic work</h2>
+      <p class="section-subtitle">
+        Research spanning computational physics, biotechnology AI, and aeronautical systems.
+      </p>
+    </div>
+
+    <div class="research-layout">
+      <div class="education-list">
+        {education.map((edu, i) => (
+          <div class="education-card fade-in" style={`transition-delay: ${i * 0.1}s`}>
+            <div class="edu-year">{edu.year}</div>
+            <div class="edu-content">
+              <div class="edu-status">{edu.status}</div>
+              <h3 class="edu-degree">{edu.degree}</h3>
+              <p class="edu-institution">{edu.institution}</p>
+              <p class="edu-focus"><strong>Research:</strong> {edu.focus}</p>
+              <p class="edu-description">{edu.description}</p>
+              {edu.publication && (
+                <span class="edu-publication">Published research</span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="research-areas fade-in">
+        <h3 class="areas-title">Research interests</h3>
+        <div class="areas-tags">
+          {researchAreas.map((area) => (
+            <span class="area-tag">{area}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .research {
+    padding: var(--section-padding);
+    background: var(--color-bg-light);
+  }
+
+  .research-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .research-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .education-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .education-card {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 1.5rem;
+    padding: 1.75rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .education-card:first-child {
+    padding-top: 0;
+  }
+
+  .edu-year {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    padding-top: 0.2rem;
+  }
+
+  .edu-status {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .edu-degree {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    margin-bottom: 0.25rem;
+  }
+
+  .edu-institution {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .edu-focus {
+    font-size: 0.85rem;
+    color: var(--color-text-dark);
+    margin-bottom: 0.4rem;
+  }
+
+  .edu-description {
+    font-size: 0.825rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .edu-publication {
+    display: inline-block;
+    margin-top: 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--color-accent-dim);
+    background: var(--color-accent-glow);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+  }
+
+  .research-areas {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    position: sticky;
+    top: 6rem;
+  }
+
+  .areas-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    margin-bottom: 1rem;
+  }
+
+  .areas-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .area-tag {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    background: var(--color-bg-light);
+    border: 1px solid var(--color-border);
+    padding: 0.35rem 0.8rem;
+    border-radius: 20px;
+    transition: all 0.2s;
+  }
+
+  .area-tag:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    background: var(--color-accent-glow);
+  }
+
+  @media (max-width: 768px) {
+    .research-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .education-card {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+
+    .research-areas {
+      position: static;
+    }
+  }
+</style>

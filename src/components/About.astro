@@ -1,0 +1,120 @@
+---
+---
+
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-layout fade-in">
+      <div class="about-content">
+        <p class="section-label">About me</p>
+        <h2 class="section-title">Engineer, architect,<br />builder.</h2>
+        <div class="about-text">
+          <p>
+            I'm a Solutions Architect with 10+ years turning complex research into
+            production systems. My work spans AI, data engineering, and R&D leadership
+            across Brazil, Germany, Austria, Portugal, and the Netherlands.
+          </p>
+          <p>
+            I've led cross-continental teams, built autonomous drone systems,
+            designed knowledge graphs at scale, and driven digital transformation
+            across 50+ locations. I thrive at the intersection of deep technical
+            work and strategic impact.
+          </p>
+          <p>
+            When I'm not architecting systems, you'll find me exploring new
+            research papers, contributing to open source, or mentoring the next
+            generation of engineers.
+          </p>
+        </div>
+      </div>
+      <div class="about-highlights">
+        <div class="highlight-card">
+          <span class="highlight-number">10+</span>
+          <span class="highlight-label">Years of experience</span>
+        </div>
+        <div class="highlight-card">
+          <span class="highlight-number">5</span>
+          <span class="highlight-label">Countries worked in</span>
+        </div>
+        <div class="highlight-card">
+          <span class="highlight-number">50+</span>
+          <span class="highlight-label">Locations transformed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding: var(--section-padding);
+    background: var(--color-bg-dark);
+  }
+
+  .about-layout {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about .section-label,
+  .about .section-title {
+    color: #fff;
+  }
+
+  .about .section-label {
+    color: var(--color-accent);
+  }
+
+  .about-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .about-text p {
+    font-size: 1rem;
+    color: var(--color-text-muted-light);
+    line-height: 1.8;
+  }
+
+  .about-highlights {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .highlight-card {
+    background: var(--color-bg-dark-alt);
+    border: 1px solid var(--color-border-dark);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    transition: border-color 0.2s;
+  }
+
+  .highlight-card:hover {
+    border-color: var(--color-accent);
+  }
+
+  .highlight-number {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+
+  .highlight-label {
+    font-size: 0.8rem;
+    color: var(--color-text-muted-light);
+  }
+
+  @media (max-width: 768px) {
+    .about-layout {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+</style>

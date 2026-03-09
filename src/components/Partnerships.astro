@@ -1,0 +1,177 @@
+---
+const partnerTypes = [
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+    title: 'Strategic Partnerships',
+    description: 'Long-term collaborations with technology companies and research institutions. Joint development of AI solutions tailored to industry verticals.',
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`,
+    title: 'White-Label Solutions',
+    description: 'License and rebrand production-grade AI systems for your own clients. Full technical support, SLAs, and custom integration assistance included.',
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+    title: 'Research Collaboration',
+    description: 'Joint R&D initiatives with academic institutions and corporate labs. Co-authoring papers, shared IP models, and funded research programs.',
+  },
+];
+---
+
+<section class="partnerships" id="partnerships">
+  <div class="container">
+    <div class="partnerships-header fade-in">
+      <p class="section-label">Partnerships</p>
+      <h2 class="section-title">Let's grow together</h2>
+      <p class="section-subtitle">
+        Open to partnerships that create mutual value &mdash;
+        from technology licensing to joint research ventures.
+      </p>
+    </div>
+    <div class="partnerships-grid">
+      {partnerTypes.map((type, i) => (
+        <div class="partner-card fade-in" style={`transition-delay: ${i * 0.1}s`}>
+          <div class="partner-icon" set:html={type.icon} />
+          <h3 class="partner-title">{type.title}</h3>
+          <p class="partner-description">{type.description}</p>
+          <a href="#contact" class="partner-link">
+            Start a conversation
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      ))}
+    </div>
+    <div class="partners-logos fade-in">
+      <p class="partners-label">Trusted by</p>
+      <div class="logos-row">
+        <span class="partner-logo-text">ZfRK</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .partnerships {
+    padding: var(--section-padding);
+    background: var(--color-bg-dark);
+  }
+
+  .partnerships .section-label {
+    color: var(--color-accent);
+  }
+
+  .partnerships .section-title,
+  .partnerships .section-subtitle {
+    color: #fff;
+  }
+
+  .partnerships .section-subtitle {
+    color: var(--color-text-muted-light);
+  }
+
+  .partnerships-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .partnerships-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .partner-card {
+    background: var(--color-bg-dark-alt);
+    border: 1px solid var(--color-border-dark);
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .partner-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  .partner-icon {
+    color: var(--color-accent);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--color-accent-rgb), 0.1);
+    border-radius: 10px;
+  }
+
+  .partner-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .partner-description {
+    font-size: 0.9rem;
+    color: var(--color-text-muted-light);
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .partner-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    transition: gap 0.2s;
+  }
+
+  .partner-link:hover {
+    gap: 0.7rem;
+    color: var(--color-accent-hover);
+  }
+
+  .partners-logos {
+    margin-top: 3.5rem;
+    text-align: center;
+  }
+
+  .partners-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-text-muted-light);
+    margin-bottom: 1.25rem;
+  }
+
+  .logos-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .partner-logo-text {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .partner-logo-text:hover {
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 768px) {
+    .partnerships-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

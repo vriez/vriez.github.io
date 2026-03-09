@@ -1,0 +1,198 @@
+---
+const projects = [
+  {
+    tag: 'AI Platform',
+    title: 'Atlas',
+    description: 'Autonomous AI decision-making platform for crisis management with human-in-the-loop oversight. Integrates risk perception, strategic planning, and adaptive response using OODA Loop architectures.',
+    tech: ['AI', 'OODA Loop', 'Crisis Management', 'Autonomous Systems'],
+    highlight: 'Presented at the Austrian Parliament — Language & Intelligence 2025',
+    link: 'https://www.zfrk.org/neuigkeiten/language-intelligence-2025-zrk-mit-starken-beitraegen-im-parlament-vertreten/',
+  },
+  {
+    tag: 'Knowledge Systems',
+    title: 'RAG Knowledge Graphs',
+    description: 'Retrieval-Augmented Generation systems combining knowledge graphs with LLMs for operational intelligence. Deployed across 50+ locations for real-time decision support.',
+    tech: ['RAG', 'Neo4j', 'LLM', 'Kafka', 'Kubernetes'],
+    highlight: 'MSc thesis research applied to production systems',
+  },
+  {
+    tag: 'Geospatial AI',
+    title: 'AI Geoprocessing',
+    description: 'Scalable geospatial AI pipeline for regulatory compliance and energy certificate management. Multi-GPU distributed training with fraud detection capabilities.',
+    tech: ['PyTorch', 'CUDA', 'Dask', 'Geoprocessing', 'MLOps'],
+    highlight: 'Scaled transaction processing across 3 continents',
+  },
+  {
+    tag: 'Autonomous Systems',
+    title: 'OODA Loop UAV Engine',
+    description: 'Real-time decision-making engine for autonomous drones using embedded Rust. Constraint-aware fault-tolerant multi-agent system for mission completion assistance.',
+    tech: ['Rust', 'Arduino', 'Pixhawk', 'Real-time Systems'],
+    highlight: 'Ongoing research — USP Aeronautical Systems',
+  },
+  {
+    tag: 'Computer Vision',
+    title: 'OCR with Reinforcement Learning',
+    description: 'Optical Character Recognition system trained with Reinforcement Learning for automated document processing and data extraction at scale.',
+    tech: ['RL', 'Computer Vision', 'TensorFlow', 'OCR'],
+    highlight: 'Automated document processing pipeline',
+  },
+  {
+    tag: 'Media Intelligence',
+    title: 'Audio Fingerprinting System',
+    description: 'Real-time broadcast monitoring using acoustic landmark technology. Distributed processing system monitoring multiple radio stations simultaneously.',
+    tech: ['Kafka', 'Spark', 'Python', 'Signal Processing'],
+    highlight: 'Open-source contribution',
+  },
+];
+---
+
+<section class="projects" id="projects">
+  <div class="container">
+    <div class="projects-header fade-in">
+      <p class="section-label">Products & Projects</p>
+      <h2 class="section-title">What I've built</h2>
+      <p class="section-subtitle">
+        From research prototypes to production systems serving thousands of users.
+      </p>
+    </div>
+    <div class="projects-grid">
+      {projects.map((project, i) => (
+        <article class="project-card fade-in" style={`transition-delay: ${i * 0.08}s`}>
+          <div class="project-tag">{project.tag}</div>
+          <h3 class="project-title">
+            {project.link ? (
+              <a href={project.link} target="_blank" rel="noopener noreferrer">
+                {project.title}
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            ) : project.title}
+          </h3>
+          <p class="project-description">{project.description}</p>
+          {project.highlight && (
+            <p class="project-highlight">{project.highlight}</p>
+          )}
+          <div class="project-tech">
+            {project.tech.map((t) => (
+              <span class="tech-tag">{t}</span>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects {
+    padding: var(--section-padding);
+    background: var(--color-bg-warm);
+  }
+
+  .projects-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+  }
+
+  .project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  .project-tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    background: var(--color-accent-glow);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    width: fit-content;
+    margin-bottom: 1rem;
+  }
+
+  .project-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--color-text-dark);
+  }
+
+  .project-title a {
+    color: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .project-title a:hover {
+    color: var(--color-accent);
+  }
+
+  .project-title svg {
+    opacity: 0.4;
+    flex-shrink: 0;
+  }
+
+  .project-description {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+  }
+
+  .project-highlight {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-accent-dim);
+    background: var(--color-accent-glow);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--color-accent);
+  }
+
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tech-tag {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    background: var(--color-bg-light);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    border: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 1024px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

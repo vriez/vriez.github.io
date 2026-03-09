@@ -1,0 +1,156 @@
+---
+const products = [
+  {
+    name: 'AI Document Intelligence',
+    description: 'End-to-end OCR and document understanding pipeline. Extract structured data from handwritten and printed documents with state-of-the-art accuracy.',
+    license: 'Commercial license',
+    status: 'Available',
+  },
+  {
+    name: 'Knowledge Graph Engine',
+    description: 'Build, query, and reason over enterprise knowledge graphs. Integrates with LLMs for natural language querying and automated ontology enrichment.',
+    license: 'Commercial license',
+    status: 'Available',
+  },
+  {
+    name: 'RAG Framework',
+    description: 'Production-ready retrieval-augmented generation framework. Modular architecture supporting multiple vector stores, rerankers, and LLM backends.',
+    license: 'Open source (MIT)',
+    status: 'Coming soon',
+  },
+];
+---
+
+<section class="products" id="products">
+  <div class="container">
+    <div class="products-header fade-in">
+      <p class="section-label">Products & Licensing</p>
+      <h2 class="section-title">Ready-to-deploy solutions</h2>
+      <p class="section-subtitle">
+        Battle-tested products built from real-world projects,
+        available for licensing or custom deployment.
+      </p>
+    </div>
+    <div class="products-grid">
+      {products.map((product, i) => (
+        <div class="product-card fade-in" style={`transition-delay: ${i * 0.1}s`}>
+          <div class="product-header">
+            <h3 class="product-name">{product.name}</h3>
+            <span class={`product-status ${product.status === 'Available' ? 'available' : 'soon'}`}>
+              {product.status}
+            </span>
+          </div>
+          <p class="product-description">{product.description}</p>
+          <div class="product-footer">
+            <span class="product-license">{product.license}</span>
+            <a href="#contact" class="product-cta">Inquire</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .products {
+    padding: var(--section-padding);
+    background: var(--color-bg-light);
+  }
+
+  .products-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .product-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .product-card:hover {
+    border-color: var(--color-accent);
+    box-shadow: 0 8px 30px rgba(var(--color-accent-rgb), 0.08);
+    transform: translateY(-2px);
+  }
+
+  .product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .product-name {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
+  }
+
+  .product-status {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .product-status.available {
+    color: var(--color-accent);
+    background: rgba(var(--color-accent-rgb), 0.1);
+  }
+
+  .product-status.soon {
+    color: var(--color-text-muted);
+    background: var(--color-bg-light);
+  }
+
+  .product-description {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .product-license {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .product-cta {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    transition: color 0.2s;
+  }
+
+  .product-cta:hover {
+    color: var(--color-accent-hover);
+  }
+
+  @media (max-width: 768px) {
+    .products-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
