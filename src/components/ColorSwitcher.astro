@@ -4,10 +4,6 @@
   <button class="swatch" data-color="purple" style="--sw: #8a05be;" title="Purple" aria-label="Purple accent"></button>
   <button class="swatch" data-color="yellow" style="--sw: #eab308;" title="Yellow" aria-label="Yellow accent"></button>
   <button class="swatch" data-color="orange" style="--sw: #f97316;" title="Orange" aria-label="Orange accent"></button>
-  <span class="divider"></span>
-  <label class="photo-bg-picker" title="Photo background color" aria-label="Photo background color">
-    <input type="color" id="photo-bg-input" value="#0b0d17" />
-  </label>
 </div>
 
 <script>
@@ -42,18 +38,6 @@
   if (saved && themes[saved]) applyTheme(saved);
   else applyTheme('purple');
 
-  // Photo background color picker
-  const photoBgInput = document.getElementById('photo-bg-input') as HTMLInputElement;
-  const savedPhotoBg = localStorage.getItem('photo-bg-color');
-  if (savedPhotoBg) {
-    photoBgInput.value = savedPhotoBg;
-    document.documentElement.style.setProperty('--color-photo-bg', savedPhotoBg);
-  }
-  photoBgInput.addEventListener('input', (e) => {
-    const color = (e.target as HTMLInputElement).value;
-    document.documentElement.style.setProperty('--color-photo-bg', color);
-    localStorage.setItem('photo-bg-color', color);
-  });
 </script>
 
 <style>
@@ -91,51 +75,4 @@
     box-shadow: 0 0 8px var(--sw);
   }
 
-  .divider {
-    width: 1px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.2);
-    align-self: center;
-  }
-
-  .photo-bg-picker {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: all 0.2s;
-    position: relative;
-  }
-
-  .photo-bg-picker:hover {
-    transform: scale(1.2);
-    border-color: rgba(255, 255, 255, 0.4);
-  }
-
-  .photo-bg-picker input[type="color"] {
-    position: absolute;
-    inset: -4px;
-    width: 32px;
-    height: 32px;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    background: none;
-  }
-
-  .photo-bg-picker input[type="color"]::-webkit-color-swatch-wrapper {
-    padding: 0;
-  }
-
-  .photo-bg-picker input[type="color"]::-webkit-color-swatch {
-    border: none;
-    border-radius: 50%;
-  }
-
-  .photo-bg-picker input[type="color"]::-moz-color-swatch {
-    border: none;
-    border-radius: 50%;
-  }
 </style>

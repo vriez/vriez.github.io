@@ -4,7 +4,6 @@ const education = [
     degree: 'Specialization in Aeronautical Systems',
     institution: 'Escola de Engenharia de Sao Carlos (EESC), USP',
     year: '2024 - present',
-    status: 'Ongoing',
     focus: 'Real-time OODA loop engine for autonomous drones',
     description: 'Embedded real-time decision systems for autonomous drones using Rust. Arduino and Pixhawk hardware with OODA Loop algorithms for autonomous flight control.',
   },
@@ -12,7 +11,6 @@ const education = [
     degree: 'Master of Science in Biotechnology',
     institution: 'Universidade Federal de Sao Carlos',
     year: '2024',
-    status: 'Completed',
     focus: 'AI RAG Knowledge Graphs',
     description: 'Text Mining, Artificial Intelligence and Applications in Biotechnology. Supervisors: Prof. Dra. Ignez Caracelli & Prof. Dr. Julio Zukerman (BioMat Lab).',
     publication: true,
@@ -21,7 +19,6 @@ const education = [
     degree: 'Bachelor of Science in Computational Physics',
     institution: 'University of Sao Paulo (USP)',
     year: '2015',
-    status: 'Completed',
     focus: 'Magnetoelectric Multiferroic Composites',
     description: 'Interdisciplinary program: Physics, Mathematics, Computer Science. Research on synthesis and characterization of PbO-free composites (GCFerr Lab).',
     publication: true,
@@ -56,7 +53,6 @@ const researchAreas = [
           <div class="education-card fade-in" style={`transition-delay: ${i * 0.1}s`}>
             <div class="edu-year">{edu.year}</div>
             <div class="edu-content">
-              <div class="edu-status">{edu.status}</div>
               <h3 class="edu-degree">{edu.degree}</h3>
               <p class="edu-institution">{edu.institution}</p>
               <p class="edu-focus"><strong>Research:</strong> {edu.focus}</p>
@@ -121,15 +117,6 @@ const researchAreas = [
     font-weight: 600;
     color: var(--color-text-muted);
     padding-top: 0.2rem;
-  }
-
-  .edu-status {
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-accent);
-    margin-bottom: 0.4rem;
   }
 
   .edu-degree {
