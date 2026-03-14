@@ -1,4 +1,9 @@
 ---
+interface Props {
+  topic?: string;
+}
+
+const { topic = 'General Inquiry' } = Astro.props;
 ---
 
 <section class="contact" id="contact">
@@ -16,6 +21,7 @@
         <input type="text" name="_honey" style="display:none">
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_next" value="https://vitor-reis.github.io/#contact">
+        <input type="hidden" name="subject" value={topic} />
         <div class="form-group">
           <label for="contact-name" class="sr-only">Name</label>
           <input type="text" id="contact-name" name="name" placeholder="Name" required />
@@ -72,15 +78,16 @@
     max-width: 480px;
   }
 
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    width: 100%;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: 20%;
-  }
+   .contact-form {
+     display: flex;
+     flex-direction: column;
+     gap: 0.75rem;
+     width: 100%;
+     max-width: 480px;
+     margin-left: auto;
+     margin-right: 20%;
+     margin-top: -2rem; /* Move form up */
+   }
 
   .contact-form input,
   .contact-form textarea {
@@ -107,23 +114,23 @@
     min-height: 200px;
   }
 
-  .btn-submit {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.75rem;
-    font-family: var(--font-body);
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--color-text-light);
-    background: var(--color-accent);
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.2s;
-    align-self: flex-start;
-  }
+   .btn-submit {
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     gap: 0.5rem;
+     padding: 0.75rem 1.75rem;
+     font-family: var(--font-body);
+     font-size: 0.9rem;
+     font-weight: 600;
+     color: var(--color-text-light);
+     background: var(--color-accent);
+     border: none;
+     border-radius: 8px;
+     cursor: pointer;
+     transition: background 0.2s, transform 0.2s;
+     align-self: flex-end;
+   }
 
   .btn-submit:hover {
     background: var(--color-accent-hover);
