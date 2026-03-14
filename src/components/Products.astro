@@ -6,6 +6,7 @@ const products = [
     license: 'Commercial license',
     status: 'Available',
     href: '/products/web-crawler',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
   },
   {
     name: 'Ontologyzer',
@@ -13,6 +14,7 @@ const products = [
     license: 'Commercial license',
     status: 'Available',
     href: '/products/ontologyzer',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="5" y2="16"/><line x1="12" y1="8" x2="19" y2="16"/><line x1="5" y1="19" x2="19" y2="19"/></svg>`,
   },
   {
     name: 'Tesselage',
@@ -20,6 +22,7 @@ const products = [
     license: 'Commercial license',
     status: 'In Development',
     href: '/products/tesselage',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
   },
   {
     name: 'Marketeer',
@@ -27,6 +30,7 @@ const products = [
     license: 'Commercial license',
     status: 'In Development',
     href: '/products/marketeer',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
   },
 ];
 ---
@@ -42,46 +46,68 @@ const products = [
       </p>
     </div>
 
-    <div class="carousel-wrapper fade-in">
-      <div class="carousel" id="products-carousel">
-        <div class="carousel-track" id="products-track">
-          {products.map((product) => (
-            <a href={product.href} class="product-card-link">
-              <div class="product-card">
-                <div class="product-header">
-                  <h3 class="product-name">{product.name}</h3>
-                  <span class={`product-status ${product.status === 'Available' ? 'available' : 'soon'}`}>
-                    {product.status}
-                  </span>
-                </div>
-                <p class="product-description">{product.description}</p>
-                <div class="product-footer">
-                  <span class="product-license">{product.license}</span>
-                  <span class="product-cta">Learn more &rarr;</span>
-                </div>
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
+    <div class="carousel-layout fade-in">
+      <!-- Gallery nav -->
+      <nav class="gallery" id="products-gallery">
+        {products.map((product, i) => (
+          <button
+            class={`gallery-item ${i === 0 ? 'active' : ''}`}
+            data-index={i}
+          >
+            <span class="gallery-icon" set:html={product.icon} />
+            <span class="gallery-text">
+              <span class="gallery-name">{product.name}</span>
+              <span class={`gallery-status ${product.status === 'Available' ? 'available' : 'soon'}`}>
+                {product.status}
+              </span>
+            </span>
+            <span class="gallery-indicator" />
+          </button>
+        ))}
+      </nav>
 
-      <div class="carousel-controls">
-        <div class="carousel-dots" id="products-dots">
-          {products.map((_, i) => (
-            <button
-              class={`carousel-dot ${i === 0 ? 'active' : ''}`}
-              data-index={i}
-              aria-label={`Go to product ${i + 1}`}
-            />
-          ))}
+      <!-- Carousel -->
+      <div class="carousel-main">
+        <div class="carousel" id="products-carousel">
+          <div class="carousel-track" id="products-track">
+            {products.map((product) => (
+              <a href={product.href} class="product-card-link">
+                <div class="product-card">
+                  <div class="product-header">
+                    <h3 class="product-name">{product.name}</h3>
+                    <span class={`product-status ${product.status === 'Available' ? 'available' : 'soon'}`}>
+                      {product.status}
+                    </span>
+                  </div>
+                  <p class="product-description">{product.description}</p>
+                  <div class="product-footer">
+                    <span class="product-license">{product.license}</span>
+                    <span class="product-cta">Learn more &rarr;</span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
-        <div class="carousel-arrows">
-          <button class="carousel-arrow prev" id="products-prev" aria-label="Previous product">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-          </button>
-          <button class="carousel-arrow next" id="products-next" aria-label="Next product">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
-          </button>
+
+        <div class="carousel-controls">
+          <div class="carousel-dots" id="products-dots">
+            {products.map((_, i) => (
+              <button
+                class={`carousel-dot ${i === 0 ? 'active' : ''}`}
+                data-index={i}
+                aria-label={`Go to product ${i + 1}`}
+              />
+            ))}
+          </div>
+          <div class="carousel-arrows">
+            <button class="carousel-arrow prev" id="products-prev" aria-label="Previous product">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button class="carousel-arrow next" id="products-next" aria-label="Next product">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -91,10 +117,10 @@ const products = [
 <script>
   const track = document.getElementById('products-track') as HTMLElement;
   const dots = document.querySelectorAll('#products-dots .carousel-dot');
+  const galleryItems = document.querySelectorAll('#products-gallery .gallery-item');
   const prevBtn = document.getElementById('products-prev') as HTMLButtonElement;
   const nextBtn = document.getElementById('products-next') as HTMLButtonElement;
-  const cards = track.querySelectorAll('.product-card-link');
-  const total = cards.length;
+  const total = galleryItems.length;
   let current = 0;
   let startX = 0;
   let isDragging = false;
@@ -103,9 +129,15 @@ const products = [
     current = Math.max(0, Math.min(index, total - 1));
     track.style.transform = `translateX(-${current * 100}%)`;
     dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+    galleryItems.forEach((item, i) => item.classList.toggle('active', i === current));
     prevBtn.classList.toggle('disabled', current === 0);
     nextBtn.classList.toggle('disabled', current === total - 1);
   }
+
+  // Gallery clicks
+  galleryItems.forEach((item) => {
+    item.addEventListener('click', () => goTo(Number((item as HTMLElement).dataset.index)));
+  });
 
   prevBtn.addEventListener('click', () => goTo(current - 1));
   nextBtn.addEventListener('click', () => goTo(current + 1));
@@ -113,7 +145,7 @@ const products = [
     dot.addEventListener('click', () => goTo(Number((dot as HTMLElement).dataset.index)));
   });
 
-  // Keyboard navigation
+  // Keyboard
   document.getElementById('products-carousel')!.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
     if (e.key === 'ArrowRight') goTo(current + 1);
@@ -149,12 +181,12 @@ const products = [
   // Auto-advance
   let autoplay = setInterval(() => goTo((current + 1) % total), 5000);
   const carousel = document.getElementById('products-carousel')!;
-  carousel.addEventListener('pointerenter', () => clearInterval(autoplay));
-  carousel.addEventListener('pointerleave', () => {
+  const layout = carousel.closest('.carousel-layout')!;
+  layout.addEventListener('pointerenter', () => clearInterval(autoplay));
+  layout.addEventListener('pointerleave', () => {
     autoplay = setInterval(() => goTo((current + 1) % total), 5000);
   });
 
-  // Init
   goTo(0);
 </script>
 
@@ -169,9 +201,127 @@ const products = [
     margin-bottom: 3rem;
   }
 
-  /* Carousel */
-  .carousel-wrapper {
+  /* Layout: gallery left + carousel right */
+  .carousel-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  /* Gallery */
+  .gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    position: sticky;
+    top: calc(var(--header-height) + 2rem);
+  }
+
+  .gallery-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.875rem 1rem;
+    border: none;
+    background: transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
     position: relative;
+    transition: background 0.25s, transform 0.2s;
+    font-family: inherit;
+  }
+
+  .gallery-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scaleY(0);
+    width: 3px;
+    height: 60%;
+    border-radius: 0 2px 2px 0;
+    background: var(--color-accent);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .gallery-item.active::before {
+    transform: translateY(-50%) scaleY(1);
+  }
+
+  .gallery-item:hover {
+    background: rgba(var(--color-accent-rgb), 0.05);
+  }
+
+  .gallery-item.active {
+    background: rgba(var(--color-accent-rgb), 0.08);
+  }
+
+  .gallery-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    color: var(--color-text-muted);
+    opacity: 0.5;
+    transition: color 0.3s, opacity 0.3s;
+  }
+
+  .gallery-item.active .gallery-icon {
+    color: var(--color-accent);
+    opacity: 1;
+  }
+
+  .gallery-item:hover .gallery-icon {
+    opacity: 0.8;
+  }
+
+  .gallery-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  .gallery-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    transition: color 0.3s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .gallery-item.active .gallery-name {
+    color: var(--color-text-dark);
+  }
+
+  .gallery-status {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    opacity: 0.6;
+    transition: opacity 0.3s;
+  }
+
+  .gallery-status.available {
+    color: var(--color-accent);
+  }
+
+  .gallery-item.active .gallery-status {
+    opacity: 1;
+  }
+
+  .gallery-indicator {
+    display: none;
+  }
+
+  /* Carousel main area */
+  .carousel-main {
+    min-width: 0;
   }
 
   .carousel {
@@ -257,7 +407,6 @@ const products = [
     color: var(--color-text-muted);
     line-height: 1.8;
     flex: 1;
-    max-width: 640px;
   }
 
   .product-footer {
@@ -288,7 +437,7 @@ const products = [
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
   }
 
   .carousel-dots {
@@ -347,9 +496,62 @@ const products = [
     pointer-events: none;
   }
 
+  /* Mobile: gallery becomes horizontal strip above carousel */
   @media (max-width: 768px) {
     .products {
       padding-inline: 1.25rem;
+    }
+
+    .carousel-layout {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .gallery {
+      flex-direction: row;
+      overflow-x: auto;
+      gap: 0.25rem;
+      position: static;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 0.25rem;
+    }
+
+    .gallery::-webkit-scrollbar {
+      display: none;
+    }
+
+    .gallery-item {
+      flex-shrink: 0;
+      padding: 0.6rem 0.875rem;
+      border-radius: 8px;
+    }
+
+    .gallery-item::before {
+      left: 50%;
+      top: auto;
+      bottom: 0;
+      transform: translateX(-50%) scaleX(0);
+      width: 60%;
+      height: 2px;
+      border-radius: 2px 2px 0 0;
+    }
+
+    .gallery-item.active::before {
+      transform: translateX(-50%) scaleX(1);
+    }
+
+    .gallery-icon {
+      width: 22px;
+      height: 22px;
+    }
+
+    .gallery-status {
+      display: none;
+    }
+
+    .gallery-name {
+      font-size: 0.8rem;
     }
 
     .product-card {
