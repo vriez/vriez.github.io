@@ -34,10 +34,9 @@
     btn.addEventListener('click', () => applyTheme((btn as HTMLElement).dataset.color!));
   });
 
-  const saved = localStorage.getItem('accent-color');
-  if (saved && themes[saved]) applyTheme(saved);
+  const savedColor = localStorage.getItem('accent-color');
+  if (savedColor && themes[savedColor]) applyTheme(savedColor);
   else applyTheme('purple');
-
 </script>
 
 <style>
@@ -47,6 +46,7 @@
     right: 1.5rem;
     z-index: 1000;
     display: flex;
+    align-items: center;
     gap: 0.5rem;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(12px);

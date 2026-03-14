@@ -3,8 +3,8 @@ const education = [
   {
     degree: 'Specialization in Aeronautical Systems',
     institution: 'Escola de Engenharia de Sao Carlos (EESC), USP',
-    year: '2024 - present',
-    focus: 'Real-time OODA loop engine for autonomous drones',
+    year: '2024 - 2025',
+    focus: 'Constraint-Aware Fault-Tolerant Multi-Agent UAV System Using OODA Loop: Realistic Mission Completion Assistance',
     description: 'Embedded real-time decision systems for autonomous drones using Rust. Arduino and Pixhawk hardware with OODA Loop algorithms for autonomous flight control.',
   },
   {
@@ -31,9 +31,7 @@ const researchAreas = [
   'Computer Vision & OCR',
   'Geospatial AI',
   'Embedded Real-time Systems',
-  'Crisis Management AI',
   'Multi-Agent UAV Systems',
-  'ML Governance & Compliance',
 ];
 ---
 
@@ -79,12 +77,12 @@ const researchAreas = [
 
 <style>
   .research {
-    padding: var(--section-padding);
-    background: var(--color-bg-light);
+    padding: 6rem 2rem;
+    background: var(--color-bg-warm);
   }
 
   .research-header {
-    margin-bottom: 3.5rem;
+    margin-bottom: 3rem;
   }
 
   .research-layout {
@@ -185,7 +183,7 @@ const researchAreas = [
     border: 1px solid var(--color-border);
     padding: 0.35rem 0.8rem;
     border-radius: 20px;
-    transition: all 0.2s;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
   }
 
   .area-tag:hover {

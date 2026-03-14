@@ -63,14 +63,14 @@ const navLinks = [
     right: 0;
     z-index: 100;
     padding: 1.25rem 2rem;
-    transition: all 0.3s ease;
+    transition: background 0.3s, padding 0.3s, box-shadow 0.3s;
   }
 
   .header.scrolled {
-    background: rgba(11, 13, 23, 0.9);
+    background: rgba(26, 24, 21, 0.92);
     backdrop-filter: blur(12px);
     padding: 0.75rem 2rem;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
+    box-shadow: 0 1px 0 rgba(235, 230, 223, 0.05);
   }
 
   .header-inner {
@@ -84,7 +84,7 @@ const navLinks = [
   .logo {
     font-size: 1.5rem;
     font-weight: 800;
-    color: #fff;
+    color: var(--color-text-light);
     letter-spacing: -0.02em;
   }
 
@@ -106,7 +106,7 @@ const navLinks = [
   }
 
   .nav-link:hover {
-    color: #fff;
+    color: var(--color-text-light);
   }
 
   .nav-cta {
@@ -116,12 +116,12 @@ const navLinks = [
     padding: 0.5rem 1.25rem;
     border: 1px solid var(--color-accent);
     border-radius: 6px;
-    transition: all 0.2s;
+    transition: background 0.2s, color 0.2s;
   }
 
   .nav-cta:hover {
     background: var(--color-accent);
-    color: #fff;
+    color: var(--color-text-light);
   }
 
   .menu-toggle {
@@ -138,7 +138,7 @@ const navLinks = [
     display: block;
     width: 24px;
     height: 2px;
-    background: #fff;
+    background: var(--color-text-light);
     border-radius: 2px;
     transition: all 0.3s;
   }

@@ -1,6 +1,4 @@
 ---
-import ColorSwitcher from '../components/ColorSwitcher.astro';
-
 interface Props {
   title?: string;
   description?: string;
@@ -27,7 +25,6 @@ const {
   </head>
   <body>
     <slot />
-    <ColorSwitcher />
     <script>
       const observer = new IntersectionObserver(
         (entries) => {

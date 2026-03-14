@@ -3,15 +3,15 @@ const projects = [
   {
     tag: 'AI Platform',
     title: 'Atlas',
-    description: 'Autonomous AI decision-making platform for crisis management with human-in-the-loop oversight. Integrates risk perception, strategic planning, and adaptive response using OODA Loop architectures.',
-    tech: ['AI', 'OODA Loop', 'Crisis Management', 'Autonomous Systems'],
+    description: 'AI decision-support platform for crisis management. Uses OODA Loop cycles to structure situational awareness, option generation, and response coordination with human oversight.',
+    tech: ['AI', 'OODA Loop', 'Autonomous Systems'],
     highlight: 'Presented at the Austrian Parliament — Language & Intelligence 2025',
     link: 'https://www.zfrk.org/neuigkeiten/language-intelligence-2025-zrk-mit-starken-beitraegen-im-parlament-vertreten/',
   },
   {
     tag: 'Knowledge Systems',
     title: 'RAG Knowledge Graphs',
-    description: 'Retrieval-Augmented Generation systems combining knowledge graphs with LLMs for operational intelligence. Deployed across 50+ locations for real-time decision support.',
+    description: 'RAG system backed by Neo4j knowledge graphs and LLMs. Deployed across 50+ locations for querying structured operational data in natural language.',
     tech: ['RAG', 'Neo4j', 'LLM', 'Kafka', 'Kubernetes'],
     highlight: 'MSc thesis research applied to production systems',
   },
@@ -25,14 +25,14 @@ const projects = [
   {
     tag: 'Autonomous Systems',
     title: 'OODA Loop UAV Engine',
-    description: 'Real-time decision-making engine for autonomous drones using embedded Rust. Constraint-aware fault-tolerant multi-agent system for mission completion assistance.',
+    description: 'Real-time decision engine for autonomous drones using embedded Rust on Arduino and Pixhawk hardware. Implements OODA Loop cycles for autonomous flight control.',
     tech: ['Rust', 'Arduino', 'Pixhawk', 'Real-time Systems'],
     highlight: 'Ongoing research — USP Aeronautical Systems',
   },
   {
     tag: 'Computer Vision',
     title: 'OCR with Reinforcement Learning',
-    description: 'Optical Character Recognition system trained with Reinforcement Learning for automated document processing and data extraction at scale.',
+    description: 'OCR system trained with Reinforcement Learning for automated document processing. Extracts structured data from scanned forms and certificates.',
     tech: ['RL', 'Computer Vision', 'TensorFlow', 'OCR'],
     highlight: 'Automated document processing pipeline',
   },
@@ -52,7 +52,7 @@ const projects = [
       <p class="section-label">Products & Projects</p>
       <h2 class="section-title">What I've built</h2>
       <p class="section-subtitle">
-        From research prototypes to production systems serving thousands of users.
+        From research prototypes to production systems.
       </p>
     </div>
     <div class="projects-grid">
@@ -84,12 +84,12 @@ const projects = [
 
 <style>
   .projects {
-    padding: var(--section-padding);
-    background: var(--color-bg-warm);
+    padding: 8rem 2rem;
+    background: var(--color-bg-light);
   }
 
   .projects-header {
-    margin-bottom: 3.5rem;
+    margin-bottom: 4rem;
   }
 
   .projects-grid {
@@ -102,15 +102,16 @@ const projects = [
     background: var(--color-bg-card);
     border: 1px solid var(--color-border);
     border-radius: 12px;
-    padding: 1.75rem;
+    padding: 2rem 1.75rem 2.5rem;
+    min-height: 380px;
     display: flex;
     flex-direction: column;
-    transition: all 0.3s ease;
+    transition: transform 0.2s, box-shadow 0.2s;
   }
 
   .project-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
   }
 
   .project-tag {
