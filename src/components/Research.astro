@@ -4,8 +4,8 @@ const education = [
     degree: 'Specialization in Aeronautical Systems',
     institution: 'Escola de Engenharia de Sao Carlos (EESC), USP',
     year: '2024 - 2025',
-    focus: 'Constraint-Aware Fault-Tolerant Multi-Agent UAV System Using OODA Loop: Realistic Mission Completion Assistance',
-    description: 'Embedded real-time decision systems for autonomous drones using Rust. Arduino and Pixhawk hardware with OODA Loop algorithms for autonomous flight control.',
+    focus: 'Adaptative UAV Avionics Architecture Generation: An OODA Loop Dynamic Framework',
+    description: 'OODA Loop dynamic framework for adaptive UAV avionics generation. Layered communication architecture, hardware-simulation integration, and AI-driven knowledge extraction using RAG and Knowledge Graphs. Supervisor: Prof. Dr. João Paulo Eguea.',
   },
   {
     degree: 'Master of Science in Biotechnology',
@@ -26,12 +26,12 @@ const education = [
 ];
 
 const researchAreas = [
-  'Autonomous Decision Systems',
-  'Knowledge Graphs & RAG',
-  'Computer Vision & OCR',
-  'Geospatial AI',
+  'Autonomous Decision-Making Systems',
+  'Knowledge Management',
+  'Computer Vision & OCR [HTR]',
+  'Ontologies',
   'Embedded Real-time Systems',
-  'Multi-Agent UAV Systems',
+  'UAV Systems',
 ];
 ---
 
@@ -77,18 +77,18 @@ const researchAreas = [
 
 <style>
   .research {
-    padding: 4rem 2rem;
+    padding: var(--section-padding);
     background: var(--color-bg-warm);
   }
 
   .research-header {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
   }
 
   .research-layout {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 2.5rem;
+    gap: 3rem;
     align-items: start;
   }
 
@@ -100,9 +100,9 @@ const researchAreas = [
 
   .education-card {
     display: grid;
-    grid-template-columns: 100px 1fr;
-    gap: 1rem;
-    padding: 1.25rem 0;
+    grid-template-columns: 120px 1fr;
+    gap: 1.25rem;
+    padding: 1.75rem 0;
     border-bottom: 1px solid var(--color-border);
   }
 
@@ -126,19 +126,19 @@ const researchAreas = [
     font-size: 1rem;
     font-weight: 700;
     color: var(--color-text-dark);
-    margin-bottom: 0.15rem;
+    margin-bottom: 0.25rem;
   }
 
   .edu-institution {
     font-size: 0.825rem;
     color: var(--color-text-muted);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
   }
 
   .edu-focus {
     font-size: 0.8rem;
     color: var(--color-text-dark);
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.35rem;
   }
 
   .edu-description {
@@ -149,7 +149,7 @@ const researchAreas = [
 
   .edu-publication {
     display: inline-block;
-    margin-top: 0.4rem;
+    margin-top: 0.5rem;
     font-size: 0.7rem;
     font-weight: 600;
     color: var(--color-accent-dim);
@@ -162,7 +162,7 @@ const researchAreas = [
     background: var(--color-bg-card);
     border: 1px solid var(--color-border);
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: 1.75rem;
     position: sticky;
     top: 6rem;
   }
@@ -171,13 +171,13 @@ const researchAreas = [
     font-size: 0.9rem;
     font-weight: 700;
     color: var(--color-text-dark);
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
   }
 
   .areas-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.6rem;
   }
 
   .area-tag {

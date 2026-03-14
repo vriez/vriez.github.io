@@ -35,53 +35,140 @@ const projects = [
 <section class="projects" id="projects">
   <div class="container">
     <div class="projects-header fade-in">
-      <p class="section-label">Products & Projects</p>
-      <h2 class="section-title">What I've built</h2>
-      <p class="section-subtitle">
-        From research prototypes to production systems.
-      </p>
+      <div class="projects-header-row">
+        <div>
+          <p class="section-label">Products & Projects</p>
+          <h2 class="section-title">What I've built</h2>
+          <p class="section-subtitle">
+            From research prototypes to production systems.
+          </p>
+        </div>
+        <div class="carousel-nav">
+          <button class="carousel-btn" id="carousel-prev" aria-label="Previous project">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="carousel-btn" id="carousel-next" aria-label="Next project">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="projects-grid">
-      {projects.map((project, i) => (
-        <article class="project-card fade-in" style={`transition-delay: ${i * 0.08}s`}>
-          <div class="project-tag">{project.tag}</div>
-          <h3 class="project-title">
-            {project.link ? (
-              <a href={project.link} target="_blank" rel="noopener noreferrer">
-                {project.title}
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              </a>
-            ) : project.title}
-          </h3>
-          <p class="project-description">{project.description}</p>
-          {project.highlight && (
-            <p class="project-highlight">{project.highlight}</p>
-          )}
-          <div class="project-tech">
-            {project.tech.map((t) => (
-              <span class="tech-tag">{t}</span>
-            ))}
-          </div>
-        </article>
-      ))}
-    </div>
+  </div>
+  <div class="carousel-track" id="carousel-track">
+    {projects.map((project, i) => (
+      <article class="project-card fade-in" style={`transition-delay: ${i * 0.08}s`}>
+        <div class="project-tag">{project.tag}</div>
+        <h3 class="project-title">
+          {project.link ? (
+            <a href={project.link} target="_blank" rel="noopener noreferrer">
+              {project.title}
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          ) : project.title}
+        </h3>
+        <p class="project-description">{project.description}</p>
+        {project.highlight && (
+          <p class="project-highlight">{project.highlight}</p>
+        )}
+        <div class="project-tech">
+          {project.tech.map((t) => (
+            <span class="tech-tag">{t}</span>
+          ))}
+        </div>
+      </article>
+    ))}
   </div>
 </section>
 
+<script>
+  const track = document.getElementById('carousel-track');
+  const prevBtn = document.getElementById('carousel-prev');
+  const nextBtn = document.getElementById('carousel-next');
+
+  if (track && prevBtn && nextBtn) {
+    const getScrollAmount = () => {
+      const card = track.querySelector('.project-card') as HTMLElement;
+      if (!card) return 400;
+      return card.offsetWidth + 24; // card width + gap
+    };
+
+    prevBtn.addEventListener('click', () => {
+      track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+    });
+
+    nextBtn.addEventListener('click', () => {
+      track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+    });
+  }
+</script>
+
 <style>
   .projects {
-    padding: 8rem 2rem;
+    padding: 6rem 0;
     background: var(--color-bg-light);
+    overflow: hidden;
   }
 
   .projects-header {
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
   }
 
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+  .projects-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .carousel-nav {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .carousel-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-card);
+    color: var(--color-text-dark);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .carousel-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .carousel-track {
+    display: flex;
     gap: 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    padding: 0 max(2rem, calc((100vw - var(--max-width)) / 2 + 2rem));
+    padding-bottom: 1rem;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 2rem,
+      black calc(100% - 6rem),
+      transparent
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 2rem,
+      black calc(100% - 6rem),
+      transparent
+    );
+  }
+
+  .carousel-track::-webkit-scrollbar {
+    display: none;
   }
 
   .project-card {
@@ -90,9 +177,13 @@ const projects = [
     border-radius: 12px;
     padding: 2rem 1.75rem 2.5rem;
     min-height: 380px;
+    width: calc((var(--max-width) - 1.5rem) / 2);
+    min-width: 340px;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     transition: transform 0.2s, box-shadow 0.2s;
+    scroll-snap-align: start;
   }
 
   .project-card:hover {
@@ -171,15 +262,29 @@ const projects = [
     border: 1px solid var(--color-border);
   }
 
-  @media (max-width: 1024px) {
-    .projects-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
   @media (max-width: 640px) {
-    .projects-grid {
-      grid-template-columns: 1fr;
+    .projects {
+      padding: 4rem 0;
+    }
+
+    .projects-header {
+      padding: 0 2rem;
+    }
+
+    .projects-header-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      min-width: 280px;
+      min-height: 340px;
+    }
+
+    .carousel-track {
+      padding: 0 2rem;
+      padding-bottom: 1rem;
     }
   }
 </style>
