@@ -41,41 +41,48 @@ const navLinks = [
     });
   });
 
-  // Header scroll effect
-  let lastScroll = 0;
-  const header = document.querySelector('.header');
-  window.addEventListener('scroll', () => {
-    const currentScroll = window.scrollY;
-    if (currentScroll > 100) {
-      header?.classList.add('scrolled');
-    } else {
-      header?.classList.remove('scrolled');
-    }
-    lastScroll = currentScroll;
-  });
-
-  // Scroll spy — highlight active nav link
+  // Header scroll effect + scroll spy + hash update
+  const header = document.querySelector('.header') as HTMLElement;
   const sections = document.querySelectorAll('main section[id]');
   const navLinks = document.querySelectorAll('.nav-link');
+  const headerH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.getAttribute('id');
-          navLinks.forEach((link) => {
-            link.classList.toggle(
-              'active',
-              link.getAttribute('href') === `#${id}`
-            );
-          });
+  let ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const scrollY = window.scrollY;
+
+      if (scrollY > 100) {
+        header?.classList.add('scrolled');
+      } else {
+        header?.classList.remove('scrolled');
+      }
+
+      const offset = scrollY + (headerH * 16) + 40;
+      let activeId = '';
+      sections.forEach((section) => {
+        const el = section as HTMLElement;
+        if (el.offsetTop <= offset) {
+          activeId = el.id;
         }
       });
-    },
-    { rootMargin: '-40% 0px -55% 0px' }
-  );
 
-  sections.forEach((section) => observer.observe(section));
+      navLinks.forEach((link) => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${activeId}`);
+      });
+
+      if (activeId && location.hash !== `#${activeId}`) {
+        history.replaceState(null, '', `#${activeId}`);
+      }
+
+      ticking = false;
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 </script>
 
 <style>
@@ -168,7 +175,7 @@ const navLinks = [
     height: 2px;
     background: var(--color-text-light);
     border-radius: 2px;
-    transition: all 0.3s;
+    transition: transform 0.3s, opacity 0.3s;
   }
 
   .menu-toggle.active span:nth-child(1) {

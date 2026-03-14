@@ -20,7 +20,7 @@
   --font-body: 'Outfit', system-ui, -apple-system, sans-serif;
   --font-serif: 'Fraunces', Georgia, serif;
   --max-width: 1200px;
-  --header-height: 4rem;
+  --header-height: 3.5rem;
   --section-padding: 4rem 2rem;
 }
 
@@ -31,21 +31,16 @@
 }
 
 html {
-  scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
   font-size: 16px;
 }
 
-main > section,
-footer {
-  scroll-snap-align: start;
+main > section {
   min-height: 100vh;
-  padding-top: calc(var(--header-height) + 1rem);
+  padding-top: calc(var(--header-height) + 2rem);
 }
 
 footer {
   min-height: auto;
-  scroll-snap-align: end;
 }
 
 body {
@@ -105,6 +100,19 @@ img {
   color: var(--color-text-muted);
   max-width: 600px;
   line-height: 1.7;
+}
+
+/* Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 /* Animations */

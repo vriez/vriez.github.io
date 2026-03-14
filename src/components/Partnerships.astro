@@ -55,9 +55,8 @@ const partnerTypes = [
     color: var(--color-accent);
   }
 
-  .partnerships .section-title,
-  .partnerships .section-subtitle {
-    color: #fff;
+  .partnerships .section-title {
+    color: var(--color-text-light);
   }
 
   .partnerships .section-subtitle {
@@ -65,7 +64,7 @@ const partnerTypes = [
   }
 
   .partnerships-header {
-    margin-bottom: 3.5rem;
+    margin-bottom: 3rem;
   }
 
   .partnerships-grid {
@@ -82,7 +81,7 @@ const partnerTypes = [
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    transition: all 0.3s ease;
+    transition: border-color 0.3s, transform 0.3s;
   }
 
   .partner-card:hover {
@@ -104,7 +103,7 @@ const partnerTypes = [
   .partner-title {
     font-size: 1.125rem;
     font-weight: 700;
-    color: #fff;
+    color: var(--color-text-light);
   }
 
   .partner-description {
@@ -127,41 +126,6 @@ const partnerTypes = [
   .partner-link:hover {
     gap: 0.7rem;
     color: var(--color-accent-hover);
-  }
-
-  .partners-logos {
-    margin-top: 3.5rem;
-    text-align: center;
-  }
-
-  .partners-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--color-text-muted-light);
-    margin-bottom: 1.25rem;
-  }
-
-  .logos-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2.5rem;
-    flex-wrap: wrap;
-  }
-
-  .partner-logo-text {
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.6);
-    letter-spacing: 0.05em;
-    transition: color 0.2s;
-  }
-
-  .partner-logo-text:hover {
-    color: var(--color-accent);
   }
 
   @media (max-width: 768px) {

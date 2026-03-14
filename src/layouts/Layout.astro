@@ -39,6 +39,120 @@ const {
 
       document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
     </script>
+
+    <script>
+      // Fullpage section scroll — replaces CSS scroll-snap for consistent behavior
+      const fpSections = Array.from(document.querySelectorAll('main > section'));
+
+      if (fpSections.length) {
+        let fpIndex = 0;
+        let fpLocked = false;
+
+        function fpNearest(): number {
+          const y = window.scrollY;
+          let best = 0;
+          let bestDist = Infinity;
+          for (let i = 0; i < fpSections.length; i++) {
+            const d = Math.abs((fpSections[i] as HTMLElement).offsetTop - y);
+            if (d < bestDist) { bestDist = d; best = i; }
+          }
+          return best;
+        }
+
+        function fpGo(i: number) {
+          const idx = Math.max(0, Math.min(i, fpSections.length - 1));
+          const target = (fpSections[idx] as HTMLElement).offsetTop;
+          if (idx === fpIndex && Math.abs(window.scrollY - target) < 2) return;
+          fpLocked = true;
+          fpIndex = idx;
+          window.scrollTo(0, target);
+          setTimeout(() => { fpLocked = false; }, 200);
+        }
+
+        fpIndex = fpNearest();
+
+        // Wheel — one section per scroll gesture
+        window.addEventListener('wheel', (e) => {
+          e.preventDefault();
+          if (fpLocked) return;
+          fpIndex = fpNearest();
+          fpGo(fpIndex + (e.deltaY > 0 ? 1 : -1));
+        }, { passive: false });
+
+        // Touch — vertical swipes change section, horizontal pass through
+        let fpTouchX = 0;
+        let fpTouchY = 0;
+        let fpTouchDir: 'v' | 'h' | null = null;
+
+        window.addEventListener('touchstart', (e) => {
+          fpTouchX = e.touches[0].clientX;
+          fpTouchY = e.touches[0].clientY;
+          fpTouchDir = null;
+        }, { passive: true });
+
+        window.addEventListener('touchmove', (e) => {
+          if (!fpTouchDir) {
+            const dx = Math.abs(e.touches[0].clientX - fpTouchX);
+            const dy = Math.abs(e.touches[0].clientY - fpTouchY);
+            if (dx + dy > 10) fpTouchDir = dy > dx ? 'v' : 'h';
+          }
+          if (fpTouchDir === 'v') e.preventDefault();
+        }, { passive: false });
+
+        window.addEventListener('touchend', (e) => {
+          if (fpLocked || fpTouchDir !== 'v') return;
+          const diff = fpTouchY - e.changedTouches[0].clientY;
+          if (Math.abs(diff) < 30) return;
+          fpIndex = fpNearest();
+          fpGo(fpIndex + (diff > 0 ? 1 : -1));
+        });
+
+        // Keyboard
+        window.addEventListener('keydown', (e) => {
+          const tag = (document.activeElement?.tagName || '').toLowerCase();
+          if (['input', 'textarea', 'select'].includes(tag)) return;
+          if (fpLocked) return;
+
+          const down = ['ArrowDown', 'PageDown', ' '];
+          const up = ['ArrowUp', 'PageUp'];
+
+          if (down.includes(e.key)) {
+            e.preventDefault();
+            fpIndex = fpNearest();
+            fpGo(fpIndex + 1);
+          } else if (up.includes(e.key)) {
+            e.preventDefault();
+            fpIndex = fpNearest();
+            fpGo(fpIndex - 1);
+          } else if (e.key === 'Home') {
+            e.preventDefault();
+            fpGo(0);
+          } else if (e.key === 'End') {
+            e.preventDefault();
+            fpGo(fpSections.length - 1);
+          }
+        });
+
+        // Hash link clicks (nav links, CTAs, etc.)
+        document.querySelectorAll('a[href^="#"]').forEach((a) => {
+          a.addEventListener('click', (e) => {
+            const id = (a as HTMLAnchorElement).getAttribute('href')!.slice(1);
+            const idx = fpSections.findIndex(s => s.id === id);
+            if (idx !== -1) {
+              e.preventDefault();
+              fpGo(idx);
+            }
+          });
+        });
+
+        // Handle initial hash on page load
+        if (location.hash) {
+          const id = location.hash.slice(1);
+          const idx = fpSections.findIndex(s => s.id === id);
+          if (idx !== -1) requestAnimationFrame(() => fpGo(idx));
+        }
+      }
+    </script>
   </body>
 </html>
 

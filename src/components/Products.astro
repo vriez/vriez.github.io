@@ -48,7 +48,7 @@ const products = [
 
     <div class="carousel-layout fade-in">
       <!-- Gallery nav -->
-      <nav class="gallery" id="products-gallery">
+      <nav class="gallery" id="products-gallery" aria-label="Product navigation">
         {products.map((product, i) => (
           <button
             class={`gallery-item ${i === 0 ? 'active' : ''}`}
@@ -68,7 +68,7 @@ const products = [
 
       <!-- Carousel -->
       <div class="carousel-main">
-        <div class="carousel" id="products-carousel">
+        <div class="carousel" id="products-carousel" tabindex="0" role="region" aria-label="Product carousel">
           <div class="carousel-track" id="products-track">
             {products.map((product) => (
               <a href={product.href} class="product-card-link">
@@ -413,7 +413,7 @@ const products = [
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 1.25rem;
+    padding-top: 0.75rem;
     border-top: 1px solid var(--color-border);
   }
 
@@ -437,7 +437,7 @@ const products = [
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 1.5rem;
+    margin-top: 0.5rem;
   }
 
   .carousel-dots {
@@ -453,16 +453,19 @@ const products = [
     background: var(--color-border);
     cursor: pointer;
     transition: background 0.3s, width 0.3s;
-    padding: 0;
+    padding: 1rem 0;
+    background-clip: content-box;
   }
 
   .carousel-dot.active {
     background: var(--color-accent);
+    background-clip: content-box;
     width: 3rem;
   }
 
   .carousel-dot:hover:not(.active) {
     background: var(--color-text-muted);
+    background-clip: content-box;
   }
 
   .carousel-arrows {
