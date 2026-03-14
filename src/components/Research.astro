@@ -77,65 +77,79 @@ const researchAreas = [
 
 <style>
   .research {
-    padding: 6rem 2rem;
+    padding: 4rem 2rem;
     background: var(--color-bg-warm);
   }
 
   .research-header {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
   }
 
-  .education-grid {
+  .research-layout {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
+    grid-template-columns: 2fr 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .education-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
   }
 
   .education-card {
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .education-card:first-child {
+    padding-top: 0;
+  }
+
+  .education-card:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
   }
 
   .edu-year {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     font-weight: 600;
-    color: var(--color-accent);
-    margin-bottom: 0.75rem;
+    color: var(--color-text-muted);
+    padding-top: 0.15rem;
   }
 
   .edu-degree {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 700;
+    color: var(--color-text-dark);
+    margin-bottom: 0.15rem;
+  }
+
+  .edu-institution {
+    font-size: 0.825rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .edu-focus {
+    font-size: 0.8rem;
     color: var(--color-text-dark);
     margin-bottom: 0.25rem;
   }
 
-  .edu-institution {
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
-    margin-bottom: 0.75rem;
-  }
-
-  .edu-focus {
-    font-size: 0.85rem;
-    color: var(--color-text-dark);
-    margin-bottom: 0.4rem;
-  }
-
   .edu-description {
-    font-size: 0.825rem;
+    font-size: 0.8rem;
     color: var(--color-text-muted);
-    line-height: 1.7;
+    line-height: 1.6;
   }
 
   .edu-publication {
     display: inline-block;
-    margin-top: 0.6rem;
+    margin-top: 0.4rem;
     font-size: 0.7rem;
     font-weight: 600;
     color: var(--color-accent-dim);
@@ -145,17 +159,19 @@ const researchAreas = [
   }
 
   .research-areas {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    flex-wrap: wrap;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: sticky;
+    top: 6rem;
   }
 
   .areas-title {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 700;
     color: var(--color-text-dark);
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
   }
 
   .areas-tags {
@@ -182,8 +198,17 @@ const researchAreas = [
   }
 
   @media (max-width: 768px) {
-    .education-grid {
+    .research-layout {
       grid-template-columns: 1fr;
+    }
+
+    .education-card {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+
+    .research-areas {
+      position: static;
     }
   }
 </style>
