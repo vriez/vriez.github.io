@@ -5,18 +5,28 @@ const products = [
     description: 'High-performance web crawler built in Rust. Does what Firecrawl does — except it actually works. Fast, reliable, and ready for production scraping and indexing pipelines.',
     license: 'Commercial license',
     status: 'Available',
+    href: '/products/web-crawler',
   },
   {
     name: 'Ontologyzer',
     description: 'Automated ontology extraction and structuring engine. Similar to LangExtract, but one that actually works. Extracts entities, relations, and taxonomies from unstructured text.',
     license: 'Commercial license',
     status: 'Available',
+    href: '/products/ontologyzer',
   },
   {
     name: 'Tesselage',
-    description: 'C⁴SIR platform for businesses. Comprehensive command, control, communications, computers, surveillance, intelligence, and reconnaissance solution tailored for enterprise operations.',
+    description: 'Situational awareness platform for organizations. Integrates communication channels, sensor feeds, and AI analysis into a single operational picture — inspired by military C4ISR, adapted for civilian crisis response and enterprise ops.',
     license: 'Commercial license',
     status: 'In Development',
+    href: '/products/tesselage',
+  },
+  {
+    name: 'Marketeer',
+    description: 'End-to-end marketing platform. Orchestrates campaigns, content generation, audience segmentation, analytics, and multi-channel delivery from a single control plane — replacing the patchwork of point tools with one coherent system.',
+    license: 'Commercial license',
+    status: 'In Development',
+    href: '/products/marketeer',
   },
 ];
 ---
@@ -27,29 +37,126 @@ const products = [
       <p class="section-label">Products & Licensing</p>
       <h2 class="section-title">Ready-to-deploy solutions</h2>
       <p class="section-subtitle">
-        Battle-tested products built from real-world projects,
+        Products extracted from client and research work,
         available for licensing or custom deployment.
       </p>
     </div>
-    <div class="products-grid">
-      {products.map((product, i) => (
-        <div class="product-card fade-in" style={`transition-delay: ${i * 0.1}s`}>
-          <div class="product-header">
-            <h3 class="product-name">{product.name}</h3>
-            <span class={`product-status ${product.status === 'Available' ? 'available' : 'soon'}`}>
-              {product.status}
-            </span>
-          </div>
-          <p class="product-description">{product.description}</p>
-          <div class="product-footer">
-            <span class="product-license">{product.license}</span>
-            <a href="#contact" class="product-cta">Inquire</a>
-          </div>
+
+    <div class="carousel-wrapper fade-in">
+      <div class="carousel" id="products-carousel">
+        <div class="carousel-track" id="products-track">
+          {products.map((product) => (
+            <a href={product.href} class="product-card-link">
+              <div class="product-card">
+                <div class="product-header">
+                  <h3 class="product-name">{product.name}</h3>
+                  <span class={`product-status ${product.status === 'Available' ? 'available' : 'soon'}`}>
+                    {product.status}
+                  </span>
+                </div>
+                <p class="product-description">{product.description}</p>
+                <div class="product-footer">
+                  <span class="product-license">{product.license}</span>
+                  <span class="product-cta">Learn more &rarr;</span>
+                </div>
+              </div>
+            </a>
+          ))}
         </div>
-      ))}
+      </div>
+
+      <div class="carousel-controls">
+        <div class="carousel-dots" id="products-dots">
+          {products.map((_, i) => (
+            <button
+              class={`carousel-dot ${i === 0 ? 'active' : ''}`}
+              data-index={i}
+              aria-label={`Go to product ${i + 1}`}
+            />
+          ))}
+        </div>
+        <div class="carousel-arrows">
+          <button class="carousel-arrow prev" id="products-prev" aria-label="Previous product">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="carousel-arrow next" id="products-next" aria-label="Next product">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  const track = document.getElementById('products-track') as HTMLElement;
+  const dots = document.querySelectorAll('#products-dots .carousel-dot');
+  const prevBtn = document.getElementById('products-prev') as HTMLButtonElement;
+  const nextBtn = document.getElementById('products-next') as HTMLButtonElement;
+  const cards = track.querySelectorAll('.product-card-link');
+  const total = cards.length;
+  let current = 0;
+  let startX = 0;
+  let isDragging = false;
+
+  function goTo(index: number) {
+    current = Math.max(0, Math.min(index, total - 1));
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+    prevBtn.classList.toggle('disabled', current === 0);
+    nextBtn.classList.toggle('disabled', current === total - 1);
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+  dots.forEach((dot) => {
+    dot.addEventListener('click', () => goTo(Number((dot as HTMLElement).dataset.index)));
+  });
+
+  // Keyboard navigation
+  document.getElementById('products-carousel')!.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+    if (e.key === 'ArrowRight') goTo(current + 1);
+  });
+
+  // Touch / pointer swipe
+  track.addEventListener('pointerdown', (e) => {
+    if ((e.target as HTMLElement).closest('a')) return;
+    startX = e.clientX;
+    isDragging = true;
+    track.style.transition = 'none';
+    track.setPointerCapture(e.pointerId);
+  });
+
+  track.addEventListener('pointerup', (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    track.style.transition = '';
+    const diff = e.clientX - startX;
+    if (Math.abs(diff) > 60) {
+      goTo(current + (diff < 0 ? 1 : -1));
+    } else {
+      goTo(current);
+    }
+  });
+
+  track.addEventListener('pointercancel', () => {
+    isDragging = false;
+    track.style.transition = '';
+    goTo(current);
+  });
+
+  // Auto-advance
+  let autoplay = setInterval(() => goTo((current + 1) % total), 5000);
+  const carousel = document.getElementById('products-carousel')!;
+  carousel.addEventListener('pointerenter', () => clearInterval(autoplay));
+  carousel.addEventListener('pointerleave', () => {
+    autoplay = setInterval(() => goTo((current + 1) % total), 5000);
+  });
+
+  // Init
+  goTo(0);
+</script>
 
 <style>
   .products {
@@ -62,28 +169,52 @@ const products = [
     margin-bottom: 3rem;
   }
 
-  .products-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+  /* Carousel */
+  .carousel-wrapper {
+    position: relative;
+  }
+
+  .carousel {
+    overflow: hidden;
+    border-radius: 12px;
+    touch-action: pan-y;
+  }
+
+  .carousel-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+  }
+
+  .product-card-link {
+    flex: 0 0 100%;
+    min-width: 0;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    padding: 0 0.25rem;
   }
 
   .product-card {
     background: var(--color-bg-card);
     border: 1px solid var(--color-border);
     border-radius: 12px;
-    padding: 2.5rem 2rem;
+    padding: 3rem 2.5rem;
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
-    min-height: 400px;
-    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    gap: 1.5rem;
+    min-height: 340px;
+    transition: border-color 0.3s, box-shadow 0.3s;
   }
 
-  .product-card:hover {
+  .product-card-link:hover .product-card {
     border-color: var(--color-accent);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  }
+
+  .product-card-link:hover .product-cta {
+    color: var(--color-accent-hover);
+    gap: 0.6rem;
   }
 
   .product-header {
@@ -94,7 +225,8 @@ const products = [
   }
 
   .product-name {
-    font-size: 1.125rem;
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--color-text-dark);
   }
@@ -104,9 +236,10 @@ const products = [
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    padding: 0.25rem 0.6rem;
+    padding: 0.3rem 0.75rem;
     border-radius: 4px;
     white-space: nowrap;
+    margin-top: 0.3rem;
   }
 
   .product-status.available {
@@ -120,17 +253,18 @@ const products = [
   }
 
   .product-description {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: var(--color-text-muted);
-    line-height: 1.7;
+    line-height: 1.8;
     flex: 1;
+    max-width: 640px;
   }
 
   .product-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 1rem;
+    padding-top: 1.25rem;
     border-top: 1px solid var(--color-border);
   }
 
@@ -140,19 +274,100 @@ const products = [
   }
 
   .product-cta {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: var(--color-accent);
-    transition: color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: color 0.2s, gap 0.3s;
   }
 
-  .product-cta:hover {
-    color: var(--color-accent-hover);
+  /* Controls */
+  .carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2rem;
+  }
+
+  .carousel-dots {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .carousel-dot {
+    width: 2rem;
+    height: 3px;
+    border: none;
+    border-radius: 2px;
+    background: var(--color-border);
+    cursor: pointer;
+    transition: background 0.3s, width 0.3s;
+    padding: 0;
+  }
+
+  .carousel-dot.active {
+    background: var(--color-accent);
+    width: 3rem;
+  }
+
+  .carousel-dot:hover:not(.active) {
+    background: var(--color-text-muted);
+  }
+
+  .carousel-arrows {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .carousel-arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-card);
+    color: var(--color-text-dark);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, background 0.2s, color 0.2s, opacity 0.2s;
+  }
+
+  .carousel-arrow:hover:not(.disabled) {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: white;
+  }
+
+  .carousel-arrow.disabled {
+    opacity: 0.3;
+    cursor: default;
+    pointer-events: none;
   }
 
   @media (max-width: 768px) {
-    .products-grid {
-      grid-template-columns: 1fr;
+    .products {
+      padding-inline: 1.25rem;
+    }
+
+    .product-card {
+      padding: 2rem 1.5rem;
+      min-height: auto;
+    }
+
+    .product-name {
+      font-size: 1.25rem;
+    }
+
+    .product-description {
+      font-size: 0.9rem;
+    }
+
+    .carousel-arrow {
+      width: 36px;
+      height: 36px;
     }
   }
 </style>
