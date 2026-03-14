@@ -1,0 +1,87 @@
+---
+import Product from '../../layouts/Product.astro';
+---
+
+<Product
+  name="Ontologyzer"
+  description="Automated ontology extraction and structuring engine. Extracts entities, relations, and taxonomies from unstructured text — turning raw documents into machine-readable knowledge graphs."
+  status="Available"
+  license="Commercial license"
+>
+
+<h2>What it does</h2>
+
+<p>
+  Ontologyzer takes unstructured text &mdash; documents, articles, reports, transcripts &mdash; and produces structured ontologies: entities, their types, the relationships between them, and the taxonomic hierarchies that organize them. It does what tools like LangExtract promise, but with extraction pipelines that actually hold up on real-world, messy documents.
+</p>
+
+<hr />
+
+<h2>Core capabilities</h2>
+
+<div class="feature-block">
+  <div class="feature-label">Extraction</div>
+  <h4>Entity and relation extraction</h4>
+  <p>
+    Identifies named entities (people, organizations, locations, concepts, technical terms) and the relationships between them (reports-to, part-of, caused-by, depends-on). Goes beyond simple NER by resolving coreferences, disambiguating entities across documents, and inferring implicit relationships from context.
+  </p>
+</div>
+
+<div class="feature-block">
+  <div class="feature-label">Structure</div>
+  <h4>Taxonomy generation</h4>
+  <p>
+    Automatically builds hierarchical category structures from extracted entities. Groups related concepts, identifies is-a and part-of relationships, and produces clean taxonomies that can be directly imported into knowledge management systems, search engines, or graph databases.
+  </p>
+</div>
+
+<div class="feature-block">
+  <div class="feature-label">Quality</div>
+  <h4>Consistency and validation</h4>
+  <p>
+    Cross-references extracted facts across multiple documents to identify contradictions, redundancies, and gaps. Assigns confidence scores to extracted relations. Flags ambiguous extractions for human review rather than silently guessing.
+  </p>
+</div>
+
+<hr />
+
+<h2>How it works</h2>
+
+<p>
+  The extraction pipeline runs in three stages:
+</p>
+
+<ol>
+  <li><strong>Document processing:</strong> Ingests raw text, PDF, HTML, or structured formats. Handles section detection, table extraction, and reference resolution.</li>
+  <li><strong>Semantic extraction:</strong> A multi-pass extraction engine identifies entities, relations, and hierarchies. Each pass builds on the previous one &mdash; entity extraction informs relation extraction, which informs taxonomy construction.</li>
+  <li><strong>Ontology assembly:</strong> Merges extractions across documents into a unified ontology. Resolves entity aliases, deduplicates relations, and produces output in standard formats (OWL, RDF, JSON-LD, or plain JSON).</li>
+</ol>
+
+<hr />
+
+<h2>Built for</h2>
+
+<ul>
+  <li>Knowledge graph construction from document corpora</li>
+  <li>Enterprise search systems that need structured metadata</li>
+  <li>Research organizations processing large volumes of publications</li>
+  <li>Legal and compliance teams extracting structured data from contracts and regulations</li>
+  <li>Content management systems that need automated tagging and categorization</li>
+</ul>
+
+<hr />
+
+<h2>Output formats</h2>
+
+<ul>
+  <li><strong>OWL / RDF:</strong> Standard semantic web formats for integration with existing knowledge bases</li>
+  <li><strong>JSON-LD:</strong> Linked data format for web applications</li>
+  <li><strong>Plain JSON:</strong> Simple structured output for custom integrations</li>
+  <li><strong>Neo4j / Graph DB:</strong> Direct import into graph databases</li>
+</ul>
+
+<blockquote>
+  <p>Available for licensing or custom deployment. Contact for pricing and integration details.</p>
+</blockquote>
+
+</Product>

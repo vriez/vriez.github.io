@@ -1,0 +1,98 @@
+---
+import Product from '../../layouts/Product.astro';
+---
+
+<Product
+  name="Web Crawler"
+  description="High-performance web crawler built in Rust. Handles static pages, JavaScript-rendered content, and authenticated sessions through an agentic workflow — fast, reliable, and ready for production scraping and indexing pipelines."
+  status="Available"
+  license="Commercial license"
+>
+
+<h2>What it does</h2>
+
+<p>
+  A production-grade web crawler that extracts structured content from any website &mdash; whether it serves plain HTML, renders everything client-side with JavaScript, or hides content behind login walls, CAPTCHAs, and multi-step forms. Built in Rust for speed and reliability at scale.
+</p>
+
+<hr />
+
+<h2>Three crawling modes</h2>
+
+<div class="feature-block">
+  <div class="feature-label">Mode 1</div>
+  <h4>Static crawling</h4>
+  <p>
+    High-throughput HTTP-based crawling for server-rendered pages. Parses HTML directly without a browser, achieving thousands of pages per second on modest hardware. Respects <code>robots.txt</code>, handles rate limiting, retries, and redirect chains. Ideal for documentation sites, blogs, wikis, and any content served as plain HTML.
+  </p>
+</div>
+
+<div class="feature-block">
+  <div class="feature-label">Mode 2</div>
+  <h4>Dynamic crawling</h4>
+  <p>
+    For JavaScript-heavy sites (SPAs, React/Next.js apps, dashboards), the crawler spins up headless browser instances to fully render pages before extraction. Waits for async content, handles infinite scroll, and captures content injected by client-side frameworks. Manages a pool of browser contexts for concurrent rendering without the memory bloat of naive approaches.
+  </p>
+</div>
+
+<div class="feature-block">
+  <div class="feature-label">Mode 3</div>
+  <h4>Agentic crawling</h4>
+  <p>
+    The most powerful mode. An AI-driven workflow that can navigate complex access patterns: logging into authenticated portals, filling out multi-step forms, solving interactive challenges, accepting cookie consent banners, and following conditional navigation flows. The agent observes page state, decides what actions to take, and adapts when the expected flow changes. This handles the content that no traditional crawler can reach &mdash; gated resources, member-only archives, content released only after form submission, and pages behind security walls.
+  </p>
+</div>
+
+<hr />
+
+<h2>Why Rust</h2>
+
+<p>
+  Crawling at scale is fundamentally an I/O-bound problem with CPU-bound spikes (parsing, extraction, deduplication). Rust's async runtime (<code>tokio</code>) handles massive concurrency without the garbage collection pauses that plague JVM and runtime-based crawlers. Memory usage stays predictable under load. A single instance handles workloads that would require a cluster of Python or Node.js crawlers.
+</p>
+
+<p>
+  Performance is not just about speed &mdash; it directly reduces infrastructure cost. A crawler that processes 10x more pages per dollar makes previously uneconomical projects viable.
+</p>
+
+<hr />
+
+<h2>Key capabilities</h2>
+
+<ul>
+  <li><strong>Structured extraction:</strong> Configurable extraction rules that output clean JSON, not raw HTML dumps. Define schemas for the data you need and the crawler maps page content to your structure.</li>
+  <li><strong>Deduplication:</strong> Content-aware deduplication using SimHash, so you don't store the same article served from three different URL patterns.</li>
+  <li><strong>Politeness controls:</strong> Per-domain rate limiting, configurable delays, <code>robots.txt</code> compliance, and user-agent rotation. Crawl at scale without getting blocked or overwhelming target infrastructure.</li>
+  <li><strong>Incremental crawling:</strong> Tracks what has changed since the last crawl using content hashes and HTTP conditional requests. Re-crawl a 100k-page site and only process the pages that actually changed.</li>
+  <li><strong>Pipeline integration:</strong> Outputs to S3, PostgreSQL, Elasticsearch, or custom webhooks. Fits into existing data pipelines without glue code.</li>
+</ul>
+
+<hr />
+
+<h2>Built for</h2>
+
+<ul>
+  <li>Search and retrieval systems that need fresh, structured web content</li>
+  <li>RAG pipelines that require high-quality source documents from across the web</li>
+  <li>Competitive intelligence and market monitoring</li>
+  <li>Research data collection from institutional and gated sources</li>
+  <li>Content migration and archival projects</li>
+</ul>
+
+<hr />
+
+<h2>Technical details</h2>
+
+<div class="tech-stack">
+  <span class="tech-pill">Rust</span>
+  <span class="tech-pill">Tokio</span>
+  <span class="tech-pill">Headless Chromium</span>
+  <span class="tech-pill">SimHash</span>
+  <span class="tech-pill">S3 / PostgreSQL</span>
+</div>
+
+<blockquote>
+  <p>Available for licensing or custom deployment. Contact for pricing and integration details.</p>
+</blockquote>
+
+</Product>
