@@ -44,7 +44,7 @@ const { name, description, status, license } = Astro.props;
         <p class="post-description">{description}</p>
         <div class="product-info-row">
           <span class="product-license-label">{license}</span>
-          <a href="/#contact" class="product-inquire-btn">Inquire about licensing</a>
+          <a href={`/?subject=${encodeURIComponent(name + ' Licensing')}#contact`} class="product-inquire-btn">Inquire about licensing</a>
         </div>
       </div>
       <div class="post-body">

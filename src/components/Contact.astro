@@ -1,9 +1,9 @@
 ---
 interface Props {
-  topic?: string;
+  subject?: string;
 }
 
-const { topic = 'General Inquiry' } = Astro.props;
+const { subject = 'General Inquiry' } = Astro.props;
 ---
 
 <section class="contact" id="contact">
@@ -17,14 +17,17 @@ const { topic = 'General Inquiry' } = Astro.props;
           a big decision, or a research collaborator &mdash; I'd like to hear from you.
         </p>
       </div>
-      <form class="contact-form" action="https://formsubmit.co/vitor.ereis@proton.me" method="POST">
-        <input type="text" name="_honey" style="display:none">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_next" value="https://vitor-reis.github.io/#contact">
-        <input type="hidden" name="subject" value={topic} />
-        <div class="form-group">
+       <form class="contact-form" action="https://formsubmit.co/vitor.ereis@proton.me" method="POST">
+         <input type="text" name="_honey" style="display:none">
+         <input type="hidden" name="_captcha" value="false">
+         <input type="hidden" name="_next" value="https://vitor-reis.github.io/#contact">
+         <div class="form-group">
           <label for="contact-name" class="sr-only">Name</label>
           <input type="text" id="contact-name" name="name" placeholder="Name" required />
+        </div>
+        <div class="form-group">
+          <label for="contact-subject" class="sr-only">Subject</label>
+          <input type="text" id="contact-subject" name="subject" placeholder="Subject" value={subject} />
         </div>
         <div class="form-group">
           <label for="contact-email" class="sr-only">Email</label>
@@ -160,3 +163,37 @@ const { topic = 'General Inquiry' } = Astro.props;
   }
 
 </style>
+
+<script>
+  // Handle contact links that set the subject
+  document.addEventListener('DOMContentLoaded', () => {
+    const subjectInput = document.getElementById('contact-subject') as HTMLInputElement | null;
+
+    // Check URL query parameter for cross-page subject (e.g. from product pages)
+    if (subjectInput) {
+      const params = new URLSearchParams(window.location.search);
+      const urlSubject = params.get('subject');
+      if (urlSubject) {
+        subjectInput.value = urlSubject;
+      }
+    }
+
+    // Handle same-page contact links with data-subject
+    const contactLinks = document.querySelectorAll('.contact-link');
+    if (contactLinks.length && subjectInput) {
+      contactLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const subject = link.getAttribute('data-subject');
+          if (subject) {
+            subjectInput.value = subject;
+            const contactSection = document.getElementById('contact');
+            if (contactSection) {
+              contactSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        });
+      });
+    }
+  });
+</script>
