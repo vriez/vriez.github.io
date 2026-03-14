@@ -20,6 +20,7 @@
   --font-body: 'Outfit', system-ui, -apple-system, sans-serif;
   --font-serif: 'Fraunces', Georgia, serif;
   --max-width: 1200px;
+  --header-height: 4rem;
   --section-padding: 4rem 2rem;
 }
 
@@ -39,6 +40,7 @@ main > section,
 footer {
   scroll-snap-align: start;
   min-height: 100vh;
+  padding-top: calc(var(--header-height) + 2rem);
 }
 
 footer {
