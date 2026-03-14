@@ -85,36 +85,27 @@ const researchAreas = [
     margin-bottom: 3rem;
   }
 
-  .research-layout {
+  .education-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 3rem;
-    align-items: start;
-  }
-
-  .education-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
   }
 
   .education-card {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 1.5rem;
-    padding: 1.75rem 0;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .education-card:first-child {
-    padding-top: 0;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
   }
 
   .edu-year {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     font-weight: 600;
-    color: var(--color-text-muted);
-    padding-top: 0.2rem;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
   }
 
   .edu-degree {
@@ -154,12 +145,10 @@ const researchAreas = [
   }
 
   .research-areas {
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    padding: 1.75rem;
-    position: sticky;
-    top: 6rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
   }
 
   .areas-title {
@@ -193,17 +182,8 @@ const researchAreas = [
   }
 
   @media (max-width: 768px) {
-    .research-layout {
+    .education-grid {
       grid-template-columns: 1fr;
-    }
-
-    .education-card {
-      grid-template-columns: 1fr;
-      gap: 0.25rem;
-    }
-
-    .research-areas {
-      position: static;
     }
   }
 </style>

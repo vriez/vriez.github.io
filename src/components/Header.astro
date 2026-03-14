@@ -53,6 +53,29 @@ const navLinks = [
     }
     lastScroll = currentScroll;
   });
+
+  // Scroll spy — highlight active nav link
+  const sections = document.querySelectorAll('main section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach((link) => {
+            link.classList.toggle(
+              'active',
+              link.getAttribute('href') === `#${id}`
+            );
+          });
+        }
+      });
+    },
+    { rootMargin: '-40% 0px -55% 0px' }
+  );
+
+  sections.forEach((section) => observer.observe(section));
 </script>
 
 <style>
@@ -105,8 +128,13 @@ const navLinks = [
     transition: color 0.2s;
   }
 
-  .nav-link:hover {
+  .nav-link:hover,
+  .nav-link.active {
     color: var(--color-text-light);
+  }
+
+  .nav-link.active {
+    font-weight: 600;
   }
 
   .nav-cta {
