@@ -17,28 +17,55 @@ const navLinks = [
       ))}
       <a href="#contact" class="nav-cta contact-link" data-subject="General Inquiry">Get in touch</a>
     </nav>
-    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav">
       <span></span>
       <span></span>
       <span></span>
     </button>
   </div>
+  <div class="nav-backdrop" id="nav-backdrop"></div>
 </header>
 
 <script>
-  const toggle = document.getElementById('menu-toggle');
+  const toggle = document.getElementById('menu-toggle') as HTMLButtonElement | null;
   const nav = document.getElementById('nav');
+  const backdrop = document.getElementById('nav-backdrop');
+
+  function openMenu() {
+    nav?.classList.add('open');
+    toggle?.classList.add('active');
+    toggle?.setAttribute('aria-expanded', 'true');
+    backdrop?.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    nav?.classList.remove('open');
+    toggle?.classList.remove('active');
+    toggle?.setAttribute('aria-expanded', 'false');
+    backdrop?.classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+
   toggle?.addEventListener('click', () => {
-    nav?.classList.toggle('open');
-    toggle.classList.toggle('active');
+    const isOpen = nav?.classList.contains('open');
+    isOpen ? closeMenu() : openMenu();
+  });
+
+  // Close on backdrop click
+  backdrop?.addEventListener('click', closeMenu);
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && nav?.classList.contains('open')) {
+      closeMenu();
+      toggle?.focus();
+    }
   });
 
   // Close menu on link click
   nav?.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      nav.classList.remove('open');
-      toggle?.classList.remove('active');
-    });
+    link.addEventListener('click', closeMenu);
   });
 
   // Header scroll effect + scroll spy + hash update
@@ -190,6 +217,10 @@ const navLinks = [
     transform: rotate(-45deg) translate(5px, -5px);
   }
 
+  .nav-backdrop {
+    display: none;
+  }
+
   @media (max-width: 768px) {
     .menu-toggle {
       display: flex;
@@ -200,13 +231,14 @@ const navLinks = [
       top: 0;
       right: -100%;
       width: 280px;
-      height: 100vh;
+      height: 100dvh;
       background: var(--color-bg-dark);
       flex-direction: column;
       justify-content: center;
       gap: 1.5rem;
       transition: right 0.3s ease;
       padding: 2rem;
+      z-index: 101;
     }
 
     .nav.open {
@@ -215,6 +247,22 @@ const navLinks = [
 
     .nav-link {
       font-size: 1.125rem;
+    }
+
+    .nav-backdrop {
+      display: block;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 99;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-backdrop.visible {
+      opacity: 1;
+      pointer-events: auto;
     }
   }
 </style>

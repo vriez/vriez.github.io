@@ -69,7 +69,7 @@ const products = [
       <!-- Carousel -->
       <div class="carousel-main">
         <div class="carousel" id="products-carousel" tabindex="0" role="region" aria-label="Product carousel">
-          <div class="carousel-track" id="products-track">
+          <div class="carousel-track" id="products-track" aria-live="polite">
             {products.map((product) => (
               <a href={product.href} class="product-card-link">
                 <div class="product-card">
@@ -130,8 +130,12 @@ const products = [
     track.style.transform = `translateX(-${current * 100}%)`;
     dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
     galleryItems.forEach((item, i) => item.classList.toggle('active', i === current));
-    prevBtn.classList.toggle('disabled', current === 0);
-    nextBtn.classList.toggle('disabled', current === total - 1);
+    const atStart = current === 0;
+    const atEnd = current === total - 1;
+    prevBtn.classList.toggle('disabled', atStart);
+    nextBtn.classList.toggle('disabled', atEnd);
+    prevBtn.setAttribute('aria-disabled', String(atStart));
+    nextBtn.setAttribute('aria-disabled', String(atEnd));
   }
 
   // Gallery clicks
@@ -178,15 +182,29 @@ const products = [
     goTo(current);
   });
 
-  // Auto-advance
-  let autoplay = setInterval(() => goTo((current + 1) % total), 5000);
+  // Auto-advance (disabled for prefers-reduced-motion)
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let autoplay: ReturnType<typeof setInterval> | null = null;
+
+  function startAutoplay() {
+    if (prefersReducedMotion) return;
+    stopAutoplay();
+    autoplay = setInterval(() => goTo((current + 1) % total), 5000);
+  }
+
+  function stopAutoplay() {
+    if (autoplay) { clearInterval(autoplay); autoplay = null; }
+  }
+
   const carousel = document.getElementById('products-carousel')!;
   const layout = carousel.closest('.carousel-layout')!;
-  layout.addEventListener('pointerenter', () => clearInterval(autoplay));
-  layout.addEventListener('pointerleave', () => {
-    autoplay = setInterval(() => goTo((current + 1) % total), 5000);
-  });
+  layout.addEventListener('pointerenter', stopAutoplay);
+  layout.addEventListener('pointerleave', startAutoplay);
+  // Also pause on focus within (keyboard users)
+  layout.addEventListener('focusin', stopAutoplay);
+  layout.addEventListener('focusout', startAutoplay);
 
+  startAutoplay();
   goTo(0);
 </script>
 
