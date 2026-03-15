@@ -28,7 +28,7 @@ const education = [
 const researchAreas = [
   'Autonomous Decision-Making Systems',
   'Knowledge Management',
-  'Computer Vision & OCR [HTR]',
+  'Computer Vision & OCR',
   'Ontologies',
   'Embedded Real-time Systems',
   'UAV Systems',
@@ -198,9 +198,19 @@ const researchAreas = [
     background: var(--color-accent-glow);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .research-layout {
       grid-template-columns: 1fr;
+    }
+
+    .research-areas {
+      position: static;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .research {
+      padding-inline: 1.25rem;
     }
 
     .education-card {

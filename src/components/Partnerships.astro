@@ -22,7 +22,7 @@ const partnerTypes = [
   <div class="container">
     <div class="partnerships-header fade-in">
       <p class="section-label">Partnerships</p>
-      <h2 class="section-title">Let's grow together</h2>
+      <h2 class="section-title">Work with me</h2>
       <p class="section-subtitle">
         Open to partnerships that create mutual value &mdash;
         from technology licensing to joint research ventures.
@@ -128,9 +128,24 @@ const partnerTypes = [
     color: var(--color-accent-hover);
   }
 
+  @media (max-width: 1024px) {
+    .partnerships-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
   @media (max-width: 768px) {
+    .partnerships {
+      padding-inline: 1.25rem;
+    }
+
     .partnerships-grid {
       grid-template-columns: 1fr;
+    }
+
+    .partner-link {
+      padding: 0.5rem 0;
+      min-height: 44px;
     }
   }
 </style>

@@ -7,7 +7,7 @@ const services = [
   },
   {
     icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`,
-    title: 'Operations',
+    title: 'AI for Operations',
     description: 'Replacing manual processes with AI that operations teams actually use. At Coco Bambu, that meant demand forecasting, inventory automation, and internal search tools — rolled out to 50+ locations.',
   },
   {
@@ -65,14 +65,15 @@ const services = [
     background: var(--color-bg-card);
     border: 1px solid var(--color-border);
     border-top: 3px solid var(--color-accent);
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     padding: 2rem;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
   }
 
   .service-card:hover {
     border-top-color: var(--color-accent-hover);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-2px);
   }
 
   .service-icon {
@@ -101,6 +102,10 @@ const services = [
   }
 
   @media (max-width: 768px) {
+    .services {
+      padding-inline: 1.25rem;
+    }
+
     .services-grid {
       grid-template-columns: 1fr;
     }

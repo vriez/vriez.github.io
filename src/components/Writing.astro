@@ -33,9 +33,6 @@ const posts = [
         </article>
       ))}
     </div>
-    <div class="writing-note fade-in">
-      <p>More writing on the way.</p>
-    </div>
   </div>
 </section>
 
@@ -117,17 +114,13 @@ const posts = [
     max-width: 700px;
   }
 
-  .writing-note {
-    margin-top: 2.5rem;
-    padding: 1.25rem 1.5rem;
-    background: var(--color-bg-card);
-    border: 1px dashed var(--color-border);
-    border-radius: 8px;
-  }
+@media (max-width: 768px) {
+    .writing {
+      padding-inline: 1.25rem;
+    }
 
-  .writing-note p {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-    font-style: italic;
+    .post-title {
+      font-size: 1.1rem;
+    }
   }
 </style>

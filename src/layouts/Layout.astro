@@ -21,6 +21,10 @@ const {
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="preload" href="/me-560.jpeg" as="image" />
     <title>{title}</title>
   </head>
   <body>
@@ -42,10 +46,11 @@ const {
     </script>
 
     <script>
-      // Fullpage section scroll — replaces CSS scroll-snap for consistent behavior
+      // Fullpage section scroll — desktop only (mobile sections exceed viewport height)
+      const fpEnabled = window.matchMedia('(min-width: 769px)').matches;
       const fpSections = Array.from(document.querySelectorAll('main > section'));
 
-      if (fpSections.length) {
+      if (fpSections.length && fpEnabled) {
         let fpIndex = 0;
         let fpLocked = false;
 

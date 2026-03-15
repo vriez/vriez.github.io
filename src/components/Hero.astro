@@ -11,9 +11,8 @@
         systems.
       </h1>
       <p class="hero-description">
-        I architect AI systems — from a crisis-response platform presented
-        at the Austrian Parliament to demand forecasting running in 50+
-        restaurants. A decade of work, five countries.
+        From a crisis-response platform presented at the Austrian Parliament
+        to demand forecasting in 50+ restaurants. A decade of shipping AI across five countries.
       </p>
       <div class="hero-actions">
         <a href="#projects" class="btn-primary">View my work</a>
@@ -22,7 +21,18 @@
     </div>
     <div class="hero-photo">
       <div class="photo-wrapper">
-        <img src="/me.jpeg" alt="Vitor portrait" loading="eager" decoding="async" style="object-position: center 15%;" />
+        <img
+          src="/me-560.jpeg"
+          srcset="/me-400.jpeg 400w, /me-560.jpeg 560w"
+          sizes="(max-width: 768px) 200px, 280px"
+          alt="Vitor Reis — Solutions Architect"
+          width="280"
+          height="350"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+          style="object-position: center 15%;"
+        />
       </div>
     </div>
   </div>
@@ -129,6 +139,10 @@
     transform: translateY(-1px);
   }
 
+  .btn-primary:active {
+    transform: translateY(0) scale(0.97);
+  }
+
   .btn-secondary {
     display: inline-flex;
     align-items: center;
@@ -138,17 +152,28 @@
     font-size: 0.9rem;
     border: 1px solid var(--color-border-dark);
     border-radius: 6px;
-    transition: color 0.2s, border-color 0.2s;
+    transition: color 0.2s, border-color 0.2s, transform 0.2s;
   }
 
   .btn-secondary:hover {
     color: var(--color-text-light);
     border-color: var(--color-text-muted-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary:active {
+    transform: translateY(0) scale(0.97);
   }
 
   @keyframes heroFadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 1024px) {
+    .hero-inner {
+      gap: 3rem;
+    }
   }
 
   @media (max-width: 768px) {
