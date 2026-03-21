@@ -31,12 +31,23 @@ const navLinks = [
   const nav = document.getElementById('nav');
   const backdrop = document.getElementById('nav-backdrop');
 
+  function setInert(value: boolean) {
+    document.querySelectorAll('main, footer').forEach((el) => {
+      if (value) (el as HTMLElement).setAttribute('inert', '');
+      else (el as HTMLElement).removeAttribute('inert');
+    });
+  }
+
   function openMenu() {
     nav?.classList.add('open');
     toggle?.classList.add('active');
     toggle?.setAttribute('aria-expanded', 'true');
     backdrop?.classList.add('visible');
     document.body.style.overflow = 'hidden';
+    setInert(true);
+    // Move focus to first nav link
+    const firstLink = nav?.querySelector('a');
+    firstLink?.focus();
   }
 
   function closeMenu() {
@@ -45,6 +56,7 @@ const navLinks = [
     toggle?.setAttribute('aria-expanded', 'false');
     backdrop?.classList.remove('visible');
     document.body.style.overflow = '';
+    setInert(false);
   }
 
   toggle?.addEventListener('click', () => {
@@ -97,7 +109,10 @@ const navLinks = [
       });
 
       navLinks.forEach((link) => {
-        link.classList.toggle('active', link.getAttribute('href') === `#${activeId}`);
+        const isActive = link.getAttribute('href') === `#${activeId}`;
+        link.classList.toggle('active', isActive);
+        if (isActive) link.setAttribute('aria-current', 'true');
+        else link.removeAttribute('aria-current');
       });
 
       if (activeId && location.hash !== `#${activeId}`) {
