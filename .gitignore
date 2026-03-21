@@ -2,3 +2,17 @@ node_modules/
 dist/
 .astro/
 .DS_Store
+
+# Editor / AI tool configs
+.agent/
+.agents/
+.claude/
+.continue/
+
+# Local files not part of the site
+.billing.yaml
+cv_combined.tex
+skills-lock.json
+me_focus_backup.jpeg
+me_focus_white_aligned.jpeg
+297T18MHx
