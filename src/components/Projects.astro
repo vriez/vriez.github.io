@@ -7,6 +7,7 @@ const projects = [
     tech: ['AI', 'OODA Loop', 'Autonomous Systems'],
     highlight: 'Presented at the Austrian Parliament — Language & Intelligence 2025',
     link: 'https://www.zfrk.org/neuigkeiten/language-intelligence-2025-zrk-mit-starken-beitraegen-im-parlament-vertreten/',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor"><path d="M32 4L6 18v28l26 14 26-14V18L32 4zm0 5.2L52.4 19 32 28.8 11.6 19 32 9.2zM10 22.4l20 10.8V54L10 43.2V22.4zm24 10.8l20-10.8v20.8L34 54V33.2z"/></svg>`,
   },
   {
     tag: 'Knowledge Systems',
@@ -14,6 +15,7 @@ const projects = [
     description: 'RAG system backed by Neo4j knowledge graphs. Staff at 50+ restaurant locations query operational data — recipes, SOPs, inventory rules — in natural language, without writing a single database query.',
     tech: ['RAG', 'Neo4j', 'LLM', 'Kafka', 'Kubernetes'],
     highlight: 'MSc thesis research applied to production systems',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor"><path d="M32 4L6 18v28l26 14 26-14V18L32 4zm0 5.2L52.4 19 32 28.8 11.6 19 32 9.2zM10 22.4l20 10.8V54L10 43.2V22.4zm24 10.8l20-10.8v20.8L34 54V33.2z"/></svg>`,
   },
   {
     tag: 'Autonomous Systems',
@@ -21,6 +23,7 @@ const projects = [
     description: 'Real-time decision engine for autonomous drones — embedded Rust running on Arduino and Pixhawk hardware. The drone observes, orients, decides, and acts in millisecond loops without ground-station intervention.',
     tech: ['Rust', 'Arduino', 'Pixhawk', 'Real-time Systems'],
     highlight: 'Ongoing research — USP Aeronautical Systems',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor"><circle cx="32" cy="32" r="6"/><circle cx="14" cy="14" r="4"/><circle cx="50" cy="14" r="4"/><circle cx="14" cy="50" r="4"/><circle cx="50" cy="50" r="4"/><path d="M27.8 27.8l-10-10M36.2 27.8l10-10M27.8 36.2l-10 10M36.2 36.2l10 10" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="32" cy="8" r="3.5"/><circle cx="32" cy="56" r="3.5"/><circle cx="8" cy="32" r="3.5"/><circle cx="56" cy="32" r="3.5"/><path d="M32 14v12M32 38v12M14 32h12M38 32h12" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
   },
   {
     tag: 'Computer Vision',
@@ -28,6 +31,7 @@ const projects = [
     description: 'Document OCR trained with RLHF to handle messy, real-world scans — handwritten forms, stamps, and certificates. Extracts structured fields where conventional OCR fails.',
     tech: ['RLHF', 'Computer Vision', 'PyTorch', 'OCR'],
     highlight: 'Replaced manual data entry in production',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor"><path d="M32 12c-14 0-26 12-26 20s12 20 26 20 26-12 26-20S46 12 32 12zm0 34c-7.7 0-14-6.3-14-14s6.3-14 14-14 14 6.3 14 14-6.3 14-14 14z"/><circle cx="32" cy="32" r="8"/></svg>`,
   },
 ];
 ---
@@ -51,8 +55,7 @@ const projects = [
             data-index={i}
           >
             <span class="gallery-icon">
-              {/* Using the first letter of the tag as icon for now */}
-              {project.tag.charAt(0)}
+              {project.icon ? <Fragment set:html={project.icon} /> : project.tag.charAt(0)}
             </span>
             <span class="gallery-text">
               <span class="gallery-name">{project.tag}</span>
@@ -194,6 +197,14 @@ const projects = [
     color: var(--color-text-muted);
     opacity: 0.5;
     transition: color 0.3s, opacity 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gallery-icon :global(svg) {
+    width: 100%;
+    height: 100%;
   }
 
   .gallery-item.active .gallery-icon {
