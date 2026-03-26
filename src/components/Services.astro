@@ -1,22 +1,18 @@
 ---
 const services = [
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
     title: 'AI Strategy & Architecture',
     description: 'Designing AI systems that ship — RAG pipelines, LLM integration, computer vision, and the MLOps infrastructure behind them. I\'ve taken projects from whiteboard sketch to serving real traffic.',
   },
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`,
     title: 'AI for Operations',
     description: 'Replacing manual processes with AI that operations teams actually use. At a major restaurant chain, that meant demand forecasting, inventory automation, and internal search tools — rolled out to 50+ locations.',
   },
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
     title: 'R&D & Innovation Leadership',
     description: 'Hiring, structuring, and running R&D teams that deliver. Recent work includes autonomous drone avionics, knowledge graph engines, and OCR systems — each started as a research question and ended as working software.',
   },
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>`,
     title: 'Technical Due Diligence',
     description: 'Independent assessment of AI systems, data pipelines, and infrastructure before you invest, acquire, or scale. I review what\'s actually running, not just the pitch deck.',
   },
@@ -32,12 +28,14 @@ const services = [
         I help organizations get AI into production and keep it running.
       </p>
     </div>
-    <div class="services-grid">
+    <div class="services-list">
       {services.map((service, i) => (
-        <div class="service-card fade-in" style={`transition-delay: ${i * 0.1}s`}>
-          <div class="service-icon" set:html={service.icon} />
-          <h3 class="service-title">{service.title}</h3>
-          <p class="service-description">{service.description}</p>
+        <div class="service-item fade-in" style={`transition-delay: ${i * 0.1}s`}>
+          <span class="service-number">{String(i + 1).padStart(2, '0')}</span>
+          <div class="service-content">
+            <h3 class="service-title">{service.title}</h3>
+            <p class="service-description">{service.description}</p>
+          </div>
         </div>
       ))}
     </div>
@@ -55,43 +53,43 @@ const services = [
     margin-bottom: 3rem;
   }
 
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-
-  .service-card {
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-border);
-    border-top: 3px solid var(--color-accent);
-    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-    padding: 2rem;
-    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-  }
-
-  .service-card:hover {
-    border-top-color: var(--color-accent-hover);
-    box-shadow: var(--shadow-sm);
-    transform: translateY(-2px);
-  }
-
-  .service-icon {
+  .services-list {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    background: var(--color-accent-glow);
-    border-radius: 8px;
+    flex-direction: column;
+  }
+
+  .service-item {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .service-item:first-child {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .service-number {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 300;
     color: var(--color-accent);
-    margin-bottom: 1.25rem;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 3rem;
+    padding-top: 0.15rem;
+  }
+
+  .service-content {
+    flex: 1;
+    min-width: 0;
   }
 
   .service-title {
     font-size: 1.125rem;
     font-weight: 700;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     color: var(--color-text-dark);
   }
 
@@ -99,6 +97,7 @@ const services = [
     font-size: 0.9rem;
     color: var(--color-text-muted);
     line-height: 1.7;
+    max-width: 640px;
   }
 
   @media (max-width: 768px) {
@@ -106,8 +105,14 @@ const services = [
       padding-inline: 1.25rem;
     }
 
-    .services-grid {
-      grid-template-columns: 1fr;
+    .service-item {
+      gap: 1.25rem;
+      padding: 1.5rem 0;
+    }
+
+    .service-number {
+      font-size: 1.5rem;
+      width: 2.25rem;
     }
   }
 </style>

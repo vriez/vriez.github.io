@@ -106,6 +106,10 @@ const projects = [
             ))}
           </div>
           <div class="carousel-arrows">
+            <button class="carousel-arrow pause" id="projects-pause" aria-label="Pause autoplay">
+              <svg class="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+              <svg class="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </button>
             <button class="carousel-arrow prev" id="projects-prev" aria-label="Previous project">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
             </button>
@@ -501,8 +505,8 @@ const projects = [
     }
 
     .carousel-arrow {
-      width: 36px;
-      height: 36px;
+      width: 44px;
+      height: 44px;
     }
   }
 </style>
@@ -578,24 +582,47 @@ const projects = [
   // Auto-advance (disabled for prefers-reduced-motion)
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let autoplay: ReturnType<typeof setInterval> | null = null;
+  let userPaused = false;
+  const pauseBtn = document.getElementById('projects-pause') as HTMLButtonElement;
+  const iconPause = pauseBtn.querySelector('.icon-pause') as SVGElement;
+  const iconPlay = pauseBtn.querySelector('.icon-play') as SVGElement;
 
   function startAutoplay() {
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || userPaused) return;
     stopAutoplay();
-    autoplay = setInterval(() => goTo((current + 1) % total), 5000);
+    autoplay = setInterval(() => {
+      if (current < total - 1) goTo(current + 1);
+      else stopAutoplay();
+    }, 5000);
   }
 
   function stopAutoplay() {
     if (autoplay) { clearInterval(autoplay); autoplay = null; }
   }
 
+  function updatePauseBtn() {
+    const paused = userPaused || prefersReducedMotion;
+    iconPause.style.display = paused ? 'none' : '';
+    iconPlay.style.display = paused ? '' : 'none';
+    pauseBtn.setAttribute('aria-label', paused ? 'Play autoplay' : 'Pause autoplay');
+  }
+
+  pauseBtn.addEventListener('click', () => {
+    userPaused = !userPaused;
+    if (userPaused) stopAutoplay();
+    else startAutoplay();
+    updatePauseBtn();
+  });
+
   const carousel = document.getElementById('projects-carousel')!;
   const layout = carousel.closest('.carousel-layout')!;
   layout.addEventListener('pointerenter', stopAutoplay);
-  layout.addEventListener('pointerleave', startAutoplay);
+  layout.addEventListener('pointerleave', () => { if (!userPaused) startAutoplay(); });
   layout.addEventListener('focusin', stopAutoplay);
-  layout.addEventListener('focusout', startAutoplay);
+  layout.addEventListener('focusout', () => { if (!userPaused) startAutoplay(); });
 
+  if (prefersReducedMotion) userPaused = true;
+  updatePauseBtn();
   startAutoplay();
   goTo(0);
 </script>

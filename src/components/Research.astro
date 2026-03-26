@@ -6,6 +6,7 @@ const education = [
     year: '2025',
     focus: 'Constraint-Aware Fault-Tolerant Multi-Agent UAV System Using OODA Loop: Realistic Mission Completion Assistance',
     description: 'Framework for on-the-fly UAV avionics generation — AI extracts operational knowledge via RAG and knowledge graphs.',
+    publication: true,
   },
   {
     degree: 'Master of Science in Biotechnology',
@@ -21,7 +22,6 @@ const education = [
     year: '2015',
     focus: 'Magnetoelectric Multiferroic Composites',
     description: 'Interdisciplinary program: Physics, Mathematics, Computer Science. Research on synthesis and characterization of PbO-free composites (GCFerr Lab).',
-    publication: true,
   },
 ];
 
@@ -49,7 +49,7 @@ const researchAreas = [
       <div class="education-list">
         {education.map((edu, i) => (
           <div class="education-card fade-in" style={`transition-delay: ${i * 0.1}s`}>
-            <div class="edu-year">{edu.year}</div>
+            <time class="edu-year">{edu.year}</time>
             <div class="edu-content">
               <h3 class="edu-degree">{edu.degree}</h3>
               <p class="edu-institution">{edu.institution}</p>

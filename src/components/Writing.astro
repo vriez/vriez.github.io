@@ -30,7 +30,7 @@ const posts = [
         <article class="post-item fade-in" style={`transition-delay: ${i * 0.1}s`}>
           <div class="post-meta">
             <span class="post-category">{post.category}</span>
-            <span class="post-date">{post.date}</span>
+            <time class="post-date">{post.date}</time>
           </div>
           <h3 class="post-title">
             {post.href ? <a href={post.href}>{post.title}</a> : post.title}

@@ -1,7 +1,9 @@
 :root {
   --color-bg-dark: #1a1815;
+  --color-bg-dark-rgb: 26, 24, 21;
   --color-bg-dark-alt: #242119;
   --color-bg-light: #f8f5f0;
+  --color-bg-light-rgb: 248, 245, 240;
   --color-bg-warm: #f0ebe4;
   --color-bg-card: #fdfcfa;
   --color-accent: #f97316;
@@ -13,6 +15,7 @@
   --color-accent-on-dark: #fb923c;
   --color-text-dark: #2a2520;
   --color-text-light: #ebe6df;
+  --color-text-light-rgb: 235, 230, 223;
   --color-text-muted: #6d6459;
   --color-text-muted-light: #b5ada3;
   --color-border: #e5dfd7;
@@ -31,6 +34,8 @@
   --color-error-glow: rgba(220, 38, 38, 0.1);
   --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.08);
+  --color-status-available: #2d7a3a;
+  --color-status-available-bg: rgba(45, 122, 58, 0.1);
 }
 
 *, *::before, *::after {
@@ -154,6 +159,17 @@ img {
 .fade-in.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Desktop scroll-snap */
+@media (min-width: 769px) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+
+  main > section {
+    scroll-snap-align: start;
+  }
 }
 
 /* Responsive */
