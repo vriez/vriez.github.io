@@ -18,7 +18,7 @@ const products = [
   },
   {
     name: 'Tesselage',
-    description: 'Situational awareness platform for organizations. Integrates communication channels, sensor feeds, and AI analysis into a single operational picture — inspired by military C4ISR, adapted for civilian crisis response and enterprise ops.',
+    description: 'Situational awareness platform for organizations. Integrates communication channels, sensor feeds, and AI analysis into a single operational picture — inspired by military C⁴ISR, adapted for civilian crisis response and enterprise ops.',
     license: 'Commercial license',
     status: 'In Development',
     href: '/products/tesselage',
@@ -101,10 +101,6 @@ const products = [
             ))}
           </div>
           <div class="carousel-arrows">
-            <button class="carousel-arrow pause" id="products-pause" aria-label="Pause autoplay">
-              <svg class="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-              <svg class="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </button>
             <button class="carousel-arrow prev" id="products-prev" aria-label="Previous product">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
             </button>
@@ -190,10 +186,6 @@ const products = [
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let autoplay: ReturnType<typeof setInterval> | null = null;
   let userPaused = false;
-  const pauseBtn = document.getElementById('products-pause') as HTMLButtonElement;
-  const iconPause = pauseBtn.querySelector('.icon-pause') as SVGElement;
-  const iconPlay = pauseBtn.querySelector('.icon-play') as SVGElement;
-
   function startAutoplay() {
     if (prefersReducedMotion || userPaused) return;
     stopAutoplay();
@@ -207,20 +199,6 @@ const products = [
     if (autoplay) { clearInterval(autoplay); autoplay = null; }
   }
 
-  function updatePauseBtn() {
-    const paused = userPaused || prefersReducedMotion;
-    iconPause.style.display = paused ? 'none' : '';
-    iconPlay.style.display = paused ? '' : 'none';
-    pauseBtn.setAttribute('aria-label', paused ? 'Play autoplay' : 'Pause autoplay');
-  }
-
-  pauseBtn.addEventListener('click', () => {
-    userPaused = !userPaused;
-    if (userPaused) stopAutoplay();
-    else startAutoplay();
-    updatePauseBtn();
-  });
-
   const carousel = document.getElementById('products-carousel')!;
   const layout = carousel.closest('.carousel-layout')!;
   layout.addEventListener('pointerenter', stopAutoplay);
@@ -229,7 +207,6 @@ const products = [
   layout.addEventListener('focusout', () => { if (!userPaused) startAutoplay(); });
 
   if (prefersReducedMotion) userPaused = true;
-  updatePauseBtn();
   startAutoplay();
   goTo(0);
 </script>
