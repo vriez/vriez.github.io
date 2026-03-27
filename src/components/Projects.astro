@@ -81,6 +81,7 @@ const projects = [
                     <a href={project.link} target="_blank" rel="noopener noreferrer">
                       {project.title}
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                      <span class="sr-only">(opens in new tab)</span>
                     </a>
                   ) : project.title}
                 </h3>
@@ -238,7 +239,7 @@ const projects = [
   }
 
   .gallery-status {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -409,8 +410,8 @@ const projects = [
   }
 
   .carousel-arrow {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     border: 1px solid var(--color-border);
     background: var(--color-bg-card);
@@ -422,16 +423,15 @@ const projects = [
     transition: border-color 0.2s, background 0.2s, color 0.2s, opacity 0.2s;
   }
 
-  .carousel-arrow:hover:not(.disabled) {
+  .carousel-arrow:hover:not(:disabled) {
     border-color: var(--color-accent);
     background: var(--color-accent);
     color: var(--color-text-light);
   }
 
-  .carousel-arrow.disabled {
+  .carousel-arrow:disabled {
     opacity: 0.3;
     cursor: default;
-    pointer-events: none;
   }
 
   /* Tablet: collapse sidebar into horizontal strip */
@@ -511,10 +511,6 @@ const projects = [
       font-size: 0.9rem;
     }
 
-    .carousel-arrow {
-      width: 44px;
-      height: 44px;
-    }
   }
 </style>
 
@@ -536,10 +532,8 @@ const projects = [
     galleryItems.forEach((item, i) => item.classList.toggle('active', i === current));
     const atStart = current === 0;
     const atEnd = current === total - 1;
-    prevBtn.classList.toggle('disabled', atStart);
-    nextBtn.classList.toggle('disabled', atEnd);
-    prevBtn.setAttribute('aria-disabled', String(atStart));
-    nextBtn.setAttribute('aria-disabled', String(atEnd));
+    prevBtn.disabled = atStart;
+    nextBtn.disabled = atEnd;
   }
 
   // Gallery clicks

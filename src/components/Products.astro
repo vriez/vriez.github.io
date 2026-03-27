@@ -132,10 +132,8 @@ const products = [
     galleryItems.forEach((item, i) => item.classList.toggle('active', i === current));
     const atStart = current === 0;
     const atEnd = current === total - 1;
-    prevBtn.classList.toggle('disabled', atStart);
-    nextBtn.classList.toggle('disabled', atEnd);
-    prevBtn.setAttribute('aria-disabled', String(atStart));
-    nextBtn.setAttribute('aria-disabled', String(atEnd));
+    prevBtn.disabled = atStart;
+    nextBtn.disabled = atEnd;
   }
 
   // Gallery clicks
@@ -319,7 +317,7 @@ const products = [
   }
 
   .gallery-status {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -496,8 +494,8 @@ const products = [
   }
 
   .carousel-arrow {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     border: 1px solid var(--color-border);
     background: var(--color-bg-card);
@@ -509,16 +507,15 @@ const products = [
     transition: border-color 0.2s, background 0.2s, color 0.2s, opacity 0.2s;
   }
 
-  .carousel-arrow:hover:not(.disabled) {
+  .carousel-arrow:hover:not(:disabled) {
     border-color: var(--color-accent);
     background: var(--color-accent);
     color: var(--color-text-light);
   }
 
-  .carousel-arrow.disabled {
+  .carousel-arrow:disabled {
     opacity: 0.3;
     cursor: default;
-    pointer-events: none;
   }
 
   /* Tablet: collapse sidebar into horizontal strip */
@@ -598,9 +595,5 @@ const products = [
       font-size: 0.9rem;
     }
 
-    .carousel-arrow {
-      width: 44px;
-      height: 44px;
-    }
   }
 </style>

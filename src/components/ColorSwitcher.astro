@@ -27,7 +27,9 @@
     r.setProperty('--color-accent-on-light', t.onLight);
     r.setProperty('--color-accent-on-dark', t.onDark);
     document.querySelectorAll('.swatch').forEach((s) => {
-      s.classList.toggle('active', (s as HTMLElement).dataset.color === color);
+      const isActive = (s as HTMLElement).dataset.color === color;
+      s.classList.toggle('active', isActive);
+      s.setAttribute('aria-pressed', String(isActive));
     });
     localStorage.setItem('accent-color', color);
   }

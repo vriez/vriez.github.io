@@ -163,7 +163,7 @@ img {
 /* Desktop scroll-snap */
 @media (min-width: 769px) {
   html {
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: y proximity;
   }
 
   main > section {

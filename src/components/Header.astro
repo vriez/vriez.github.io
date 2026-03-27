@@ -11,7 +11,7 @@ const navLinks = [
 <header class="header">
   <div class="header-inner">
     <a href="/" class="logo">VR<span class="logo-dot">.</span></a>
-    <nav class="nav" id="nav">
+    <nav class="nav" id="nav" aria-label="Main navigation">
       {navLinks.map((link) => (
         <a href={link.href} class="nav-link">{link.label}</a>
       ))}
@@ -109,7 +109,7 @@ const navLinks = [
       });
 
       // Adapt header theme to current section background
-      const darkSections = ['about', 'partnerships'];
+      const darkSections = ['about', 'experience', 'partnerships'];
       const onDark = darkSections.includes(activeId);
       header?.classList.toggle('header--on-light', !onDark);
 
