@@ -4,7 +4,7 @@ import Product from '../../layouts/Product.astro';
 
 <Product
   name="Ontologyzer"
-  description="Automated ontology extraction and structuring engine. Extracts entities, relations, and taxonomies from unstructured text — turning raw documents into machine-readable knowledge graphs."
+  description="Enterprise data platform that unifies scattered business data through a semantic ontology layer. Define your objects, relationships, and rules once — access everything through a single, consistent interface. AI-ready out of the box."
   status="Available"
   license="Commercial license"
 >
@@ -12,7 +12,7 @@ import Product from '../../layouts/Product.astro';
 <h2>What it does</h2>
 
 <p>
-  Ontologyzer takes unstructured text &mdash; documents, articles, reports, transcripts &mdash; and produces structured ontologies: entities, their types, the relationships between them, and the taxonomic hierarchies that organize them. It does what tools like LangExtract promise, but with extraction pipelines that actually hold up on real-world, messy documents.
+  Ontologyzer is an enterprise data platform inspired by Palantir's ontology approach. It gives organizations a single place to define, connect, and access all their data &mdash; regardless of where it lives or what format it's in. Instead of each team managing data their own way, Ontologyzer provides a unified semantic layer that everyone shares.
 </p>
 
 <hr />
@@ -20,26 +20,26 @@ import Product from '../../layouts/Product.astro';
 <h2>Core capabilities</h2>
 
 <div class="feature-block">
-  <div class="feature-label">Extraction</div>
-  <h4>Entity and relation extraction</h4>
-  <p>
-    Identifies named entities (people, organizations, locations, concepts, technical terms) and the relationships between them (reports-to, part-of, caused-by, depends-on). Goes beyond simple NER by resolving coreferences, disambiguating entities across documents, and inferring implicit relationships from context.
-  </p>
-</div>
-
-<div class="feature-block">
   <div class="feature-label">Structure</div>
-  <h4>Taxonomy generation</h4>
+  <h4>Ontology-driven data modeling</h4>
   <p>
-    Automatically builds hierarchical category structures from extracted entities. Groups related concepts, identifies is-a and part-of relationships, and produces clean taxonomies that can be directly imported into knowledge management systems, search engines, or graph databases.
+    Define your business objects &mdash; employees, projects, departments, assets, customers &mdash; and the relationships between them in a central schema. Every object type has consistent properties, validation rules, and access policies across the entire organization. No more conflicting definitions across teams.
   </p>
 </div>
 
 <div class="feature-block">
-  <div class="feature-label">Quality</div>
-  <h4>Consistency and validation</h4>
+  <div class="feature-label">Access</div>
+  <h4>Unified data layer</h4>
   <p>
-    Cross-references extracted facts across multiple documents to identify contradictions, redundancies, and gaps. Assigns confidence scores to extracted relations. Flags ambiguous extractions for human review rather than silently guessing.
+    Once the ontology is defined, all data is accessible through a single, consistent interface. Query, filter, sort, and aggregate any object type without knowing which database it lives in or how it was originally structured. One API to reach everything.
+  </p>
+</div>
+
+<div class="feature-block">
+  <div class="feature-label">Intelligence</div>
+  <h4>AI-ready infrastructure</h4>
+  <p>
+    The platform automatically generates tools and APIs from your ontology schema that AI agents can use directly. An AI assistant can understand your company's data structure and answer questions like "list all employees in Engineering" or "which projects are over budget" &mdash; without custom integrations. Supports both local and cloud AI models.
   </p>
 </div>
 
@@ -48,40 +48,40 @@ import Product from '../../layouts/Product.astro';
 <h2>How it works</h2>
 
 <p>
-  The extraction pipeline runs in three stages:
+  You describe your world once, and Ontologyzer handles the rest:
 </p>
 
 <ol>
-  <li><strong>Document processing:</strong> Ingests raw text, PDF, HTML, or structured formats. Handles section detection, table extraction, and reference resolution.</li>
-  <li><strong>Semantic extraction:</strong> A multi-pass extraction engine identifies entities, relations, and hierarchies. Each pass builds on the previous one &mdash; entity extraction informs relation extraction, which informs taxonomy construction.</li>
-  <li><strong>Ontology assembly:</strong> Merges extractions across documents into a unified ontology. Resolves entity aliases, deduplicates relations, and produces output in standard formats (OWL, RDF, JSON-LD, or plain JSON).</li>
+  <li><strong>Define your ontology:</strong> Declare object types (Employee, Department, Project), their properties, and how they relate to each other (manages, belongs-to, depends-on).</li>
+  <li><strong>Connect your sources:</strong> Map data from existing databases, APIs, and external platforms into the ontology. The platform pulls from wherever your data already lives.</li>
+  <li><strong>Access uniformly:</strong> Every team, application, and AI agent interacts with data through the same semantic layer &mdash; consistent definitions, consistent access, consistent security.</li>
 </ol>
+
+<hr />
+
+<h2>Key features</h2>
+
+<ul>
+  <li><strong>Multi-tenant isolation:</strong> Each organization gets fully isolated data and schemas, ready for SaaS deployment</li>
+  <li><strong>Fine-grained security:</strong> Row-level, column-level, and action-level access controls that enforce data governance without slowing teams down</li>
+  <li><strong>Real-time sync:</strong> Changes propagate across the system in real time through event streaming</li>
+  <li><strong>Custom logic:</strong> Define business rules, computed fields, and workflow automations directly within the ontology</li>
+  <li><strong>Full-text search:</strong> All data is indexed and searchable out of the box</li>
+</ul>
 
 <hr />
 
 <h2>Built for</h2>
 
 <ul>
-  <li>Knowledge graph construction from document corpora</li>
-  <li>Enterprise search systems that need structured metadata</li>
-  <li>Research organizations processing large volumes of publications</li>
-  <li>Legal and compliance teams extracting structured data from contracts and regulations</li>
-  <li>Content management systems that need automated tagging and categorization</li>
-</ul>
-
-<hr />
-
-<h2>Output formats</h2>
-
-<ul>
-  <li><strong>OWL / RDF:</strong> Standard semantic web formats for integration with existing knowledge bases</li>
-  <li><strong>JSON-LD:</strong> Linked data format for web applications</li>
-  <li><strong>Plain JSON:</strong> Simple structured output for custom integrations</li>
-  <li><strong>Neo4j / Graph DB:</strong> Direct import into graph databases</li>
+  <li>Enterprises with data scattered across dozens of systems and no unified view</li>
+  <li>Organizations that need strict data governance without sacrificing accessibility</li>
+  <li>Teams building AI-powered applications that need structured, reliable data access</li>
+  <li>Any company where "which database has the source of truth?" is a recurring question</li>
 </ul>
 
 <blockquote>
-  <p>Available for licensing or custom deployment. Contact for pricing and integration details.</p>
+  <p>Available for licensing or custom deployment. <a href="#contact" class="contact-link" data-subject="Ontologyzer Inquiry">Contact for pricing and integration details.</a></p>
 </blockquote>
 
 </Product>

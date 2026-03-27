@@ -4,7 +4,7 @@ import Product from '../../layouts/Product.astro';
 
 <Product
   name="Tesselage"
-  description="Situational awareness platform for organizations. Integrates communication channels, sensor feeds, and AI analysis into a single operational picture — inspired by military C⁴ISR, adapted for civilian crisis response and enterprise ops."
+  description="Real-time geospatial intelligence on a 3D globe. Fuses live aviation, maritime, satellite, weather, and logistics data into one unified view — with a local AI you can query in natural language. Offline-first, zero data leaves your machine."
   status="In Development"
   license="Commercial license"
 >
@@ -12,7 +12,7 @@ import Product from '../../layouts/Product.astro';
 <h2>What it is</h2>
 
 <p>
-  Tesselage is a situational awareness platform that fuses multiple information streams &mdash; communications, sensor data, reports, social media, IoT feeds &mdash; into a unified operational picture. Inspired by military Command, Control, Communications, Computers, Intelligence, Surveillance, and Reconnaissance (C⁴ISR) systems, adapted for civilian organizations that need real-time awareness across complex, distributed operations.
+  Tesselage is a desktop application that brings together live data from dozens of sources and displays them on an interactive 3D globe. Aircraft in flight, vessels at sea, satellites in orbit, weather patterns, seismic events, delivery trucks on route &mdash; all fused into a single, photorealistic view on your workstation. Think of what happens when Google Earth meets an intelligence-grade operations dashboard.
 </p>
 
 <hr />
@@ -20,26 +20,26 @@ import Product from '../../layouts/Product.astro';
 <h2>Core capabilities</h2>
 
 <div class="feature-block">
-  <div class="feature-label">Integration</div>
-  <h4>Multi-source data fusion</h4>
+  <div class="feature-label">Fusion</div>
+  <h4>Multi-source live data</h4>
   <p>
-    Ingests and correlates data from disparate sources: email, Slack/Teams, radio transcripts, GPS feeds, weather APIs, IoT sensors, incident reports, and social media. Normalizes everything into a common event model with spatial and temporal context.
+    Pulls real-time feeds from open sources &mdash; aviation trackers, maritime AIS, satellite orbital data, weather services, seismic sensors, traffic incident feeds, wildfire detection, and fleet telematics. Instead of opening six different websites, Tesselage consolidates everything into one unified, continuously updated view.
   </p>
 </div>
 
 <div class="feature-block">
   <div class="feature-label">Intelligence</div>
-  <h4>AI-powered analysis</h4>
+  <h4>Natural language queries</h4>
   <p>
-    Automated event detection, anomaly identification, and trend analysis across fused data streams. Natural language summarization of developing situations. Pattern recognition that surfaces correlations human operators would miss across hundreds of concurrent data feeds.
+    Ask the system questions in plain language: "Show me all vessels that went dark near the Red Sea in the last hour," "Which trucks are closest to the Austrian border right now?" A local AI model understands the current scene and answers in context &mdash; no cloud dependency, no data leaving your machine.
   </p>
 </div>
 
 <div class="feature-block">
-  <div class="feature-label">Operations</div>
-  <h4>Common operating picture</h4>
+  <div class="feature-label">Visualization</div>
+  <h4>Photorealistic 3D globe</h4>
   <p>
-    A shared, real-time visualization layer that gives every stakeholder &mdash; from field teams to executive leadership &mdash; appropriate views of the current operational state. Map-based, timeline-based, and graph-based views depending on the context.
+    Renders up to 150,000 simultaneous entities on a GPU-accelerated 3D globe at 60fps. Smooth, cinematic navigation from orbital view down to street level. Every entity is interactive &mdash; click on a vessel, an aircraft, or a delivery truck to see its full context and history.
   </p>
 </div>
 
@@ -48,21 +48,21 @@ import Product from '../../layouts/Product.astro';
 <h2>Designed for</h2>
 
 <ul>
-  <li><strong>Emergency management:</strong> Disaster response coordination across multiple agencies, NGOs, and volunteer organizations</li>
-  <li><strong>Enterprise operations:</strong> Large-scale infrastructure monitoring, supply chain visibility, and incident response</li>
-  <li><strong>Security operations:</strong> Physical and cyber security operations centers requiring multi-feed awareness</li>
-  <li><strong>Event management:</strong> Large venue and multi-site event coordination with real-time safety monitoring</li>
+  <li><strong>Logistics &amp; fleet operations:</strong> Live positions of vehicles during multi-country relocations. Border-crossing alerts, depot arrivals, route deviation warnings.</li>
+  <li><strong>Maritime compliance:</strong> Detect anomalies &mdash; vessels going dark in sensitive areas, unusual loitering, ship-to-ship transfers that may indicate sanctions evasion.</li>
+  <li><strong>Emergency response:</strong> Unified view of weather, seismic activity, wildfires, and traffic incidents for disaster coordination.</li>
+  <li><strong>Supply chain visibility:</strong> Track parcels through distribution networks, correlate delivery patterns with weather impacts.</li>
 </ul>
 
 <hr />
 
-<h2>Architecture principles</h2>
+<h2>Design principles</h2>
 
 <ol>
-  <li><strong>Resilience first:</strong> Designed to operate in degraded conditions &mdash; partial connectivity, failed sensors, overloaded networks. The system degrades gracefully rather than failing completely.</li>
-  <li><strong>Human-in-the-loop:</strong> AI augments human decision-making but never replaces it for critical actions. Every automated recommendation includes confidence levels and supporting evidence.</li>
-  <li><strong>Data sovereignty:</strong> On-premise deployment option with full data residency controls. No data leaves your infrastructure unless explicitly configured.</li>
-  <li><strong>Interoperability:</strong> Built on open standards (CAP, EDXL, GeoJSON) to integrate with existing emergency management and enterprise systems.</li>
+  <li><strong>Offline-first:</strong> Once map tiles are cached, the app works without internet. Critical for security-conscious environments and field deployments.</li>
+  <li><strong>Zero data exfiltration:</strong> No entity data, queries, or tracking history ever leaves the local machine. All processing happens on your desktop.</li>
+  <li><strong>Privacy by default:</strong> Sensitive data &mdash; customer addresses, inventory, asset values &mdash; stays encrypted in a local database.</li>
+  <li><strong>Open source foundations:</strong> Built entirely on open-source software. No proprietary dependencies or vendor lock-in.</li>
 </ol>
 
 <hr />
@@ -70,11 +70,11 @@ import Product from '../../layouts/Product.astro';
 <h2>Current status</h2>
 
 <p>
-  Tesselage is in active development. The data fusion engine and core analysis pipelines are functional. The visualization layer and multi-tenant deployment infrastructure are under construction.
+  Tesselage is in active development. The data fusion engine, live feed connectors, and 3D visualization are functional. The AI query layer and fleet management features are under construction.
 </p>
 
 <blockquote>
-  <p>Interested in early access or partnership? Get in touch to discuss your use case.</p>
+  <p>Interested in early access or partnership? <a href="#contact" class="contact-link" data-subject="Tesselage Inquiry">Get in touch to discuss your use case.</a></p>
 </blockquote>
 
 </Product>
