@@ -6,7 +6,7 @@ const education = [
     year: '2025',
     focus: 'Constraint-Aware Fault-Tolerant Multi-Agent UAV System Using OODA Loop: Realistic Mission Completion Assistance',
     description: 'Framework for on-the-fly UAV avionics generation — AI extracts operational knowledge via RAG and knowledge graphs.',
-    publication: true,
+    repo: 'https://github.com/vriez/multi_uav_ooda_system/tree/master',
   },
   {
     degree: 'Master of Science in Biotechnology',
@@ -14,6 +14,7 @@ const education = [
     year: '2024',
     focus: 'AI-driven biomedical literature mining using RAG and knowledge graphs',
     description: 'Use of Artificial Intelligence in the search for relationships between COVID-19 and Vitamin D.',
+    repo: 'https://github.com/vriez/doctor_rag/tree/dev',
   },
   {
     degree: 'Bachelor of Science in Computational Physics',
@@ -40,7 +41,7 @@ const researchAreas = [
       <p class="section-label">Research & Education</p>
       <h2 class="section-title">Academic work</h2>
       <p class="section-subtitle">
-        Three degrees, two published papers, and ongoing work in aeronautical systems.
+        Physics, biotech, aeronautics — three degrees deep and still digging.
       </p>
     </div>
 
@@ -54,8 +55,8 @@ const researchAreas = [
               <p class="edu-institution">{edu.institution}</p>
               <p class="edu-focus"><strong>Research:</strong> {edu.focus}</p>
               <p class="edu-description">{edu.description}</p>
-              {edu.publication && (
-                <span class="edu-publication">Published research</span>
+              {edu.repo && (
+                <a href={edu.repo} target="_blank" rel="noopener noreferrer" class="edu-repo">View on GitHub</a>
               )}
             </div>
           </div>
@@ -147,7 +148,7 @@ const researchAreas = [
     line-height: 1.6;
   }
 
-  .edu-publication {
+  .edu-repo {
     display: inline-block;
     margin-top: 0.5rem;
     font-size: 0.7rem;
@@ -156,6 +157,13 @@ const researchAreas = [
     background: var(--color-accent-glow);
     padding: 0.2rem 0.6rem;
     border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: background var(--duration-base), color var(--duration-base);
+  }
+
+  .edu-repo:hover {
+    color: var(--color-accent);
+    background: var(--color-accent-glow);
   }
 
   .research-areas {
@@ -221,7 +229,7 @@ const researchAreas = [
       position: static;
     }
 
-    .edu-publication {
+    .edu-repo {
       font-size: 0.75rem;
     }
   }
