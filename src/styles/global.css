@@ -51,7 +51,6 @@ html {
 
 main > section {
   min-height: 100vh;
-  padding-top: calc(var(--header-height) + 2rem);
 }
 
 footer {

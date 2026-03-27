@@ -3,8 +3,8 @@ import Product from '../../layouts/Product.astro';
 ---
 
 <Product
-  name="gabi.ru"
-  description="Intelligent job market crawler and career management platform. Continuously scans career platforms across multiple countries, matches opportunities to your profile, and organizes your entire job search — CVs, cover letters, and applications — in one place."
+  name="Krabby"
+  description="High-performance web crawler. Handles static pages, JavaScript-rendered content, and authenticated sessions through an agentic workflow — fast, reliable, and ready for production scraping and indexing pipelines."
   status="Available"
   license="Commercial license"
 >
@@ -12,65 +12,62 @@ import Product from '../../layouts/Product.astro';
 <h2>What it does</h2>
 
 <p>
-  gabi.ru is a career intelligence platform that automates the most tedious parts of a professional job search. It continuously crawls job boards and career platforms across multiple countries, matches opportunities against your professional profile, and gives you a curated shortlist of roles worth pursuing &mdash; along with the tools to apply effectively.
+  Krabby is a production-grade web crawler that extracts structured content from any website &mdash; whether it serves plain HTML, renders everything client-side with JavaScript, or hides content behind login walls and multi-step forms. Similar in scope to Firecrawl and Spider, but built from scratch for performance and flexibility.
 </p>
 
 <hr />
 
-<h2>Core capabilities</h2>
+<h2>Three crawling modes</h2>
 
 <div class="feature-block">
-  <div class="feature-label">Discovery</div>
-  <h4>Multi-platform job crawling</h4>
+  <div class="feature-label">Mode 1</div>
+  <h4>Static crawling</h4>
   <p>
-    Scans dozens of career platforms simultaneously &mdash; LinkedIn, regional job boards, government portals, international organizations, and niche industry sites. Instead of checking six different websites every morning, gabi.ru does it for you and surfaces only what matters.
+    High-throughput HTTP-based crawling for server-rendered pages. Parses HTML directly without a browser, handling rate limiting, retries, and redirect chains. Ideal for documentation sites, blogs, wikis, and any content served as plain HTML.
   </p>
 </div>
 
 <div class="feature-block">
-  <div class="feature-label">Matching</div>
-  <h4>Profile-aware opportunity ranking</h4>
+  <div class="feature-label">Mode 2</div>
+  <h4>Dynamic crawling</h4>
   <p>
-    Every listing is scored against your skills, experience, career goals, and location preferences. The system understands the difference between a lateral move and a step up, and flags roles where your background is a strong fit &mdash; including positions you might not have searched for yourself.
+    For JavaScript-heavy sites &mdash; SPAs, dashboards, client-rendered apps &mdash; the crawler spins up headless browser instances to fully render pages before extraction. Waits for async content, handles infinite scroll, and captures content injected by client-side frameworks.
   </p>
 </div>
 
 <div class="feature-block">
-  <div class="feature-label">Application</div>
-  <h4>CV and cover letter management</h4>
+  <div class="feature-label">Mode 3</div>
+  <h4>Agentic crawling</h4>
   <p>
-    Maintains multiple versions of your CV tailored for different career paths &mdash; one for AI engineering roles, another for solutions architecture, another for leadership positions. Generates targeted cover letters for specific openings, so each application speaks directly to what the employer is looking for.
+    An AI-driven workflow that navigates complex access patterns: logging into authenticated portals, filling out multi-step forms, accepting cookie consent banners, and following conditional navigation flows. The agent observes page state, decides what actions to take, and adapts when the expected flow changes &mdash; reaching content that no traditional crawler can.
   </p>
 </div>
 
 <hr />
 
-<h2>How it works</h2>
+<h2>Key capabilities</h2>
 
-<p>
-  You define your professional profile once &mdash; your experience, skills, target roles, preferred locations, and salary expectations. gabi.ru then:
-</p>
-
-<ol>
-  <li><strong>Crawls continuously:</strong> Monitors career platforms on a schedule, picking up new listings as they appear.</li>
-  <li><strong>Filters and ranks:</strong> Eliminates noise and surfaces opportunities ranked by relevance to your profile.</li>
-  <li><strong>Prepares materials:</strong> For roles you want to pursue, generates or selects the right CV version and drafts a tailored cover letter.</li>
-  <li><strong>Tracks progress:</strong> Keeps a record of what you applied to, when, and with which materials &mdash; so nothing falls through the cracks.</li>
-</ol>
+<ul>
+  <li><strong>Structured extraction:</strong> Configurable extraction rules that output clean JSON. Define schemas for the data you need and the crawler maps page content to your structure.</li>
+  <li><strong>Deduplication:</strong> Content-aware deduplication so you don't store the same content served from different URL patterns.</li>
+  <li><strong>Politeness controls:</strong> Per-domain rate limiting, configurable delays, and user-agent rotation. Crawl at scale without getting blocked.</li>
+  <li><strong>Incremental crawling:</strong> Tracks what has changed since the last crawl. Re-crawl a large site and only process the pages that actually changed.</li>
+</ul>
 
 <hr />
 
 <h2>Built for</h2>
 
 <ul>
-  <li>Professionals conducting an active, multi-market job search</li>
-  <li>International candidates targeting roles across countries and languages</li>
-  <li>Senior professionals who need different CV angles for different types of roles</li>
-  <li>Anyone tired of manually scanning the same five job boards every day</li>
+  <li>Search and retrieval systems that need fresh, structured web content</li>
+  <li>RAG pipelines that require high-quality source documents from across the web</li>
+  <li>Competitive intelligence and market monitoring</li>
+  <li>Research data collection from institutional and gated sources</li>
+  <li>Content migration and archival projects</li>
 </ul>
 
 <blockquote>
-  <p>Available for licensing or custom deployment. <a href="#contact" class="contact-link" data-subject="gabi.ru Inquiry">Contact for pricing and integration details.</a></p>
+  <p>Available for licensing or custom deployment. <a href="#contact" class="contact-link" data-subject="Krabby Inquiry">Contact for pricing and integration details.</a></p>
 </blockquote>
 
 </Product>
