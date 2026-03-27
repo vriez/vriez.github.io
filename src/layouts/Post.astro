@@ -102,7 +102,7 @@ const { title, description, date, readTime, category } = Astro.props;
   .post-header {
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: var(--z-sticky);
     background: rgba(var(--color-bg-light-rgb), 0.9);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--color-border);
@@ -156,7 +156,7 @@ const { title, description, date, readTime, category } = Astro.props;
     color: var(--color-accent-on-light);
     background: var(--color-accent-glow);
     padding: 0.3rem 0.8rem;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     margin-bottom: 1.25rem;
   }
 
@@ -281,7 +281,7 @@ const { title, description, date, readTime, category } = Astro.props;
     padding: 0.75rem 1.25rem;
     margin: 1.5rem 0;
     background: var(--color-accent-glow);
-    border-radius: 0 8px 8px 0;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
   }
 
   .post-body blockquote p {
@@ -295,7 +295,7 @@ const { title, description, date, readTime, category } = Astro.props;
     font-size: 0.875rem;
     background: var(--color-bg-warm);
     padding: 0.15rem 0.4rem;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     border: 1px solid var(--color-border);
   }
 
@@ -303,7 +303,7 @@ const { title, description, date, readTime, category } = Astro.props;
     background: var(--color-bg-dark);
     color: var(--color-text-light);
     padding: 1.25rem 1.5rem;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     overflow-x: auto;
     margin: 1.5rem 0;
     font-size: 0.85rem;
@@ -340,7 +340,7 @@ const { title, description, date, readTime, category } = Astro.props;
   .post-body details {
     margin: 1.5rem 0;
     border: 1px solid var(--color-border);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     overflow: hidden;
   }
 
@@ -387,7 +387,7 @@ const { title, description, date, readTime, category } = Astro.props;
     padding: 1.5rem;
     background: var(--color-bg-card);
     border: 1px solid var(--color-border);
-    border-radius: 10px;
+    border-radius: var(--radius-lg);
     border-left: 4px solid var(--color-accent);
   }
 

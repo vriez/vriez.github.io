@@ -147,8 +147,8 @@ const { subject = 'General Inquiry' } = Astro.props;
     color: var(--color-text-dark);
     background: var(--color-bg-card);
     border: 1px solid var(--color-border);
-    border-radius: 8px;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    border-radius: var(--radius-md);
+    transition: border-color var(--duration-base), box-shadow var(--duration-base);
     outline: 2px solid transparent;
   }
 
@@ -161,10 +161,10 @@ const { subject = 'General Inquiry' } = Astro.props;
   /* Rich text editor */
   .editor-wrap {
     border: 1px solid var(--color-border);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     background: var(--color-bg-card);
     overflow: hidden;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color var(--duration-base), box-shadow var(--duration-base);
   }
 
   .editor-wrap:focus-within {
@@ -189,11 +189,11 @@ const { subject = 'General Inquiry' } = Astro.props;
     height: 28px;
     padding: 0;
     border: none;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     background: transparent;
     color: var(--color-text-muted);
     cursor: pointer;
-    transition: background 0.15s, color 0.15s;
+    transition: background var(--duration-fast), color var(--duration-fast);
     position: relative;
   }
 
@@ -271,9 +271,9 @@ const { subject = 'General Inquiry' } = Astro.props;
     color: var(--color-text-muted);
     background: var(--color-bg-card);
     border: 1px dashed var(--color-border);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     cursor: pointer;
-    transition: border-color 0.2s, color 0.2s;
+    transition: border-color var(--duration-base), color var(--duration-base);
   }
 
   .file-upload-label:hover {
@@ -315,9 +315,9 @@ const { subject = 'General Inquiry' } = Astro.props;
      color: var(--color-text-light);
      background: var(--color-accent);
      border: none;
-     border-radius: 6px;
+     border-radius: var(--radius-md);
      cursor: pointer;
-     transition: background 0.2s, transform 0.2s;
+     transition: background var(--duration-base), transform var(--duration-base);
    }
 
   .btn-submit:hover:not(:disabled) {
