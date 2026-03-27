@@ -108,6 +108,11 @@ const navLinks = [
         }
       });
 
+      // Adapt header theme to current section background
+      const darkSections = ['about', 'partnerships'];
+      const onDark = darkSections.includes(activeId);
+      header?.classList.toggle('header--on-light', !onDark);
+
       navLinks.forEach((link) => {
         const isActive = link.getAttribute('href') === `#${activeId}`;
         link.classList.toggle('active', isActive);
@@ -145,6 +150,11 @@ const navLinks = [
     box-shadow: 0 1px 0 rgba(var(--color-text-light-rgb), 0.05);
   }
 
+  .header.scrolled.header--on-light {
+    background: var(--color-bg-light);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  }
+
   .header-inner {
     max-width: var(--max-width);
     margin: 0 auto;
@@ -158,6 +168,11 @@ const navLinks = [
     font-weight: 800;
     color: var(--color-text-light);
     letter-spacing: -0.02em;
+    transition: color 0.3s;
+  }
+
+  .header--on-light .logo {
+    color: var(--color-text-dark);
   }
 
   .logo-dot {
@@ -176,6 +191,10 @@ const navLinks = [
     font-weight: 500;
     transition: color 0.2s;
     position: relative;
+  }
+
+  .header--on-light .nav-link {
+    color: var(--color-text-muted);
   }
 
   .nav-link::after {
@@ -202,6 +221,11 @@ const navLinks = [
     color: var(--color-text-light);
   }
 
+  .header--on-light .nav-link:hover,
+  .header--on-light .nav-link.active {
+    color: var(--color-text-dark);
+  }
+
   .nav-link.active {
     font-weight: 600;
   }
@@ -216,8 +240,17 @@ const navLinks = [
     transition: background 0.2s, color 0.2s;
   }
 
+  .header--on-light .nav-cta {
+    color: var(--color-accent-on-light);
+    border-color: var(--color-accent-on-light);
+  }
+
   .nav-cta:hover {
     background: var(--color-accent);
+    color: var(--color-text-light);
+  }
+
+  .header--on-light .nav-cta:hover {
     color: var(--color-text-light);
   }
 
@@ -241,7 +274,11 @@ const navLinks = [
     height: 2px;
     background: var(--color-text-light);
     border-radius: 2px;
-    transition: transform 0.3s, opacity 0.3s;
+    transition: transform 0.3s, opacity 0.3s, background 0.3s;
+  }
+
+  .header--on-light .menu-toggle span {
+    background: var(--color-text-dark);
   }
 
   .menu-toggle.active span:nth-child(1) {
