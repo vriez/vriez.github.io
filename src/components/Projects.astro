@@ -339,6 +339,7 @@ const projects = [
     color: var(--color-text-muted);
     line-height: 1.8;
     flex: 1;
+    overflow-wrap: break-word;
   }
 
   .project-highlight {
@@ -603,6 +604,12 @@ const projects = [
   layout.addEventListener('pointerleave', () => { if (!userPaused) startAutoplay(); });
   layout.addEventListener('focusin', stopAutoplay);
   layout.addEventListener('focusout', () => { if (!userPaused) startAutoplay(); });
+
+  // Pause autoplay when tab is hidden
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopAutoplay();
+    else if (!userPaused) startAutoplay();
+  });
 
   if (prefersReducedMotion) userPaused = true;
   startAutoplay();

@@ -67,9 +67,11 @@ const { subject = 'General Inquiry' } = Astro.props;
               aria-multiline="true"
               aria-required="true"
               aria-label="Message"
+              aria-describedby="editor-error-msg"
               data-placeholder="Message"
             ></div>
           </div>
+          <span class="editor-error-msg" id="editor-error-msg" role="alert"></span>
         </div>
         <div class="form-actions">
           <div class="form-group">
@@ -229,6 +231,8 @@ const { subject = 'General Inquiry' } = Astro.props;
     color: var(--color-text-dark);
     line-height: 1.6;
     outline: 2px solid transparent;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   .editor-content:empty::before {
@@ -285,6 +289,10 @@ const { subject = 'General Inquiry' } = Astro.props;
     font-size: 0.8rem;
     color: var(--color-accent);
     font-weight: 500;
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .form-actions {
@@ -329,6 +337,13 @@ const { subject = 'General Inquiry' } = Astro.props;
   .editor-wrap.editor-error {
     border-color: var(--color-error);
     box-shadow: 0 0 0 3px var(--color-error-glow);
+  }
+
+  .editor-error-msg {
+    font-size: 0.8rem;
+    color: var(--color-error);
+    min-height: 1.2em;
+    display: block;
   }
 
   .file-error {
@@ -448,12 +463,15 @@ const { subject = 'General Inquiry' } = Astro.props;
 
         form.addEventListener('submit', (e) => {
           const content = editor.innerHTML.trim();
+          const errorMsg = document.getElementById('editor-error-msg');
           if (!content || content === '<br>') {
             e.preventDefault();
             editor.focus();
             editor.closest('.editor-wrap')?.classList.add('editor-error');
+            if (errorMsg) errorMsg.textContent = 'Please enter a message.';
             return;
           }
+          if (errorMsg) errorMsg.textContent = '';
 
           // Sanitize: strip script/style tags and event handlers
           const temp = document.createElement('div');
@@ -497,6 +515,8 @@ const { subject = 'General Inquiry' } = Astro.props;
       // Clear error state on input
       editor.addEventListener('input', () => {
         editor.closest('.editor-wrap')?.classList.remove('editor-error');
+        const errorMsg = document.getElementById('editor-error-msg');
+        if (errorMsg) errorMsg.textContent = '';
       });
     }
 
