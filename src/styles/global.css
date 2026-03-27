@@ -53,6 +53,11 @@ main > section {
   padding-top: calc(var(--header-height) + 2rem);
 }
 
+main > section:not(:first-child) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 100vh;
+}
+
 footer {
   min-height: auto;
 }

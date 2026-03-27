@@ -358,7 +358,6 @@ const products = [
   .carousel-track {
     display: flex;
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: transform;
   }
 
   .product-card-link {
@@ -382,13 +381,15 @@ const products = [
     transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
   }
 
-  .product-card-link:hover .product-card {
+  .product-card-link:hover .product-card,
+  .product-card-link:active .product-card {
     border-color: var(--color-accent);
     box-shadow: var(--shadow-md);
     transform: translateY(-2px);
   }
 
-  .product-card-link:hover .product-cta {
+  .product-card-link:hover .product-cta,
+  .product-card-link:active .product-cta {
     color: var(--color-accent-hover);
     gap: 0.6rem;
   }
@@ -479,15 +480,16 @@ const products = [
     border-radius: 2px;
     background: var(--color-border);
     cursor: pointer;
-    transition: background 0.3s, width 0.3s;
+    transition: background 0.3s, transform 0.3s;
     padding: 1rem 0;
     background-clip: content-box;
+    transform-origin: center;
   }
 
   .carousel-dot.active {
     background: var(--color-accent);
     background-clip: content-box;
-    width: 3rem;
+    transform: scaleX(1.5);
   }
 
   .carousel-dot:hover:not(.active) {
@@ -514,7 +516,8 @@ const products = [
     transition: border-color 0.2s, background 0.2s, color 0.2s, opacity 0.2s;
   }
 
-  .carousel-arrow:hover:not(:disabled) {
+  .carousel-arrow:hover:not(:disabled),
+  .carousel-arrow:active:not(:disabled) {
     border-color: var(--color-accent);
     background: var(--color-accent);
     color: var(--color-text-light);
@@ -540,6 +543,8 @@ const products = [
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       padding-bottom: 0.25rem;
+      mask-image: linear-gradient(to right, transparent 0, black 0.5rem, black calc(100% - 2rem), transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0, black 0.5rem, black calc(100% - 2rem), transparent 100%);
     }
 
     .gallery::-webkit-scrollbar {
@@ -602,5 +607,13 @@ const products = [
       font-size: 0.9rem;
     }
 
+    .product-status {
+      font-size: 0.75rem;
+    }
+
+    .product-license,
+    .product-cta {
+      font-size: 0.8rem;
+    }
   }
 </style>

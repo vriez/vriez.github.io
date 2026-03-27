@@ -264,7 +264,8 @@ const { subject = 'General Inquiry' } = Astro.props;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.625rem 1rem;
+    min-height: 44px;
     font-family: var(--font-body);
     font-size: 0.85rem;
     color: var(--color-text-muted);
@@ -388,6 +389,11 @@ const { subject = 'General Inquiry' } = Astro.props;
     color: var(--color-text-muted);
     transition: color 0.2s, transform 0.2s;
     padding: 0.75rem;
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .social-links a:hover {
