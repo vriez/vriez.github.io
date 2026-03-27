@@ -206,6 +206,10 @@ img {
   main > section {
     scroll-snap-align: start;
   }
+
+  p {
+    text-align: justify;
+  }
 }
 
 /* Responsive */
