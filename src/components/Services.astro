@@ -40,13 +40,13 @@ const services = [
 
 <style>
   .services {
-    padding-inline: 2rem;
-    padding-bottom: 4rem;
+    padding-inline: var(--space-section-inline);
+    padding-bottom: var(--space-2xl);
     background: var(--color-bg-light);
   }
 
   .services-header {
-    margin-bottom: 3rem;
+    margin-bottom: var(--space-xl);
   }
 
   .services-list {
@@ -99,7 +99,7 @@ const services = [
 
   @media (max-width: 768px) {
     .services {
-      padding-inline: 1.25rem;
+      padding-inline: var(--space-section-inline);
     }
 
     .service-item {

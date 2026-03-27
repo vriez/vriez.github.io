@@ -102,8 +102,8 @@ const { subject = 'General Inquiry' } = Astro.props;
 
 <style>
   .contact {
-    padding-inline: 2rem;
-    padding-bottom: 4rem;
+    padding-inline: var(--space-section-inline);
+    padding-bottom: var(--space-2xl);
     background: var(--color-bg-light);
   }
 
@@ -364,7 +364,7 @@ const { subject = 'General Inquiry' } = Astro.props;
 
   @media (max-width: 768px) {
     .contact {
-      padding-inline: 1.25rem;
+      padding-inline: var(--space-section-inline);
     }
 
     .contact-form {

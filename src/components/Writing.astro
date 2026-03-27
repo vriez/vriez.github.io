@@ -44,13 +44,13 @@ const posts = [
 
 <style>
   .writing {
-    padding-inline: 2rem;
-    padding-bottom: 4rem;
+    padding-inline: var(--space-section-inline);
+    padding-bottom: var(--space-2xl);
     background: var(--color-bg-warm);
   }
 
   .writing-header {
-    margin-bottom: 3rem;
+    margin-bottom: var(--space-xl);
   }
 
   .posts-list {
@@ -122,7 +122,7 @@ const posts = [
 
 @media (max-width: 768px) {
     .writing {
-      padding-inline: 1.25rem;
+      padding-inline: var(--space-section-inline);
     }
 
     .post-title {

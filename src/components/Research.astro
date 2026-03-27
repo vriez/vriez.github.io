@@ -76,13 +76,13 @@ const researchAreas = [
 
 <style>
   .research {
-    padding-inline: 2rem;
-    padding-bottom: 4rem;
+    padding-inline: var(--space-section-inline);
+    padding-bottom: var(--space-2xl);
     background: var(--color-bg-warm);
   }
 
   .research-header {
-    margin-bottom: 3rem;
+    margin-bottom: var(--space-xl);
   }
 
   .research-layout {
@@ -161,7 +161,7 @@ const researchAreas = [
   .research-areas {
     background: var(--color-bg-card);
     border: 1px solid var(--color-border);
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     padding: 1.75rem;
     position: sticky;
     top: calc(var(--header-height) + 1.5rem);
@@ -188,7 +188,7 @@ const researchAreas = [
     border: 1px solid var(--color-border);
     padding: 0.35rem 0.8rem;
     border-radius: 20px;
-    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    transition: border-color var(--duration-base), color var(--duration-base), background var(--duration-base);
   }
 
   .area-tag:hover {
@@ -209,7 +209,7 @@ const researchAreas = [
 
   @media (max-width: 768px) {
     .research {
-      padding-inline: 1.25rem;
+      padding-inline: var(--space-section-inline);
     }
 
     .education-card {

@@ -125,169 +125,27 @@ const projects = [
 
 <style>
   .projects {
-    padding-inline: 2rem;
-    padding-bottom: 4rem;
+    padding-inline: var(--space-section-inline);
+    padding-bottom: var(--space-2xl);
     background: var(--color-bg-light);
   }
 
   .projects-header {
-    margin-bottom: 3rem;
-  }
-
-  /* Layout: gallery left + carousel right */
-  .carousel-layout {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 2rem;
-    align-items: start;
-  }
-
-  /* Gallery */
-  .gallery {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    position: sticky;
-    top: calc(var(--header-height) + 2rem);
-  }
-
-  .gallery-item {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    padding: 0.875rem 1rem;
-    border: none;
-    background: transparent;
-    border-radius: 10px;
-    cursor: pointer;
-    text-align: left;
-    position: relative;
-    transition: background 0.25s, transform 0.2s;
-    font-family: inherit;
-  }
-
-  .gallery-item::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%) scaleY(0);
-    width: 3px;
-    height: 60%;
-    border-radius: 0 2px 2px 0;
-    background: var(--color-accent);
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .gallery-item.active::before {
-    transform: translateY(-50%) scaleY(1);
-  }
-
-  .gallery-item:hover {
-    background: rgba(var(--color-accent-rgb), 0.05);
-  }
-
-  .gallery-item.active {
-    background: rgba(var(--color-accent-rgb), 0.08);
-  }
-
-  .gallery-icon {
-    flex-shrink: 0;
-    width: 28px;
-    height: 28px;
-    color: var(--color-text-muted);
-    opacity: 0.5;
-    transition: color 0.3s, opacity 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .gallery-icon :global(svg) {
-    width: 100%;
-    height: 100%;
-  }
-
-  .gallery-item.active .gallery-icon {
-    color: var(--color-accent);
-    opacity: 1;
-  }
-
-  .gallery-item:hover .gallery-icon {
-    opacity: 0.8;
-  }
-
-  .gallery-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-    min-width: 0;
-  }
-
-  .gallery-name {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--color-text-muted);
-    transition: color 0.3s;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .gallery-item.active .gallery-name {
-    color: var(--color-text-dark);
-  }
-
-  .gallery-status {
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-text-muted);
-    opacity: 0.6;
-    transition: opacity 0.3s;
-  }
-
-  .gallery-status.available {
-    color: var(--color-accent);
-  }
-
-  .gallery-item.active .gallery-status {
-    opacity: 1;
-  }
-
-  .gallery-indicator {
-    display: none;
-  }
-
-  /* Carousel main area */
-  .carousel-main {
-    min-width: 0;
-  }
-
-  .carousel {
-    overflow: hidden;
-    border-radius: 12px;
-    touch-action: pan-y;
-  }
-
-  .carousel-track {
-    display: flex;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-bottom: var(--space-xl);
   }
 
   .project-card {
     background: var(--color-bg-card);
     border: 1px solid var(--color-border);
-    border-radius: 12px;
-    padding: 3rem 2.5rem;
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl) 2.5rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     min-height: 340px;
     flex: 0 0 100%;
     min-width: 0;
-    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    transition: border-color var(--duration-slow), box-shadow var(--duration-slow), transform var(--duration-slow);
   }
 
   .project-card:hover,
@@ -360,151 +218,23 @@ const projects = [
   }
 
   .tech-tag {
-    font-size: 0.7rem;
+    font-size: var(--text-xs);
     font-weight: 500;
     color: var(--color-text-muted);
     background: var(--color-bg-light);
     padding: 0.2rem 0.6rem;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     border: 1px solid var(--color-border);
-  }
-
-  /* Controls */
-  .carousel-controls {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 0.5rem;
-  }
-
-  .carousel-dots {
-    display: flex;
-    gap: 0.5rem;
-  }
-
-  .carousel-dot {
-    width: 2rem;
-    height: 3px;
-    border: none;
-    border-radius: 2px;
-    background: var(--color-border);
-    cursor: pointer;
-    transition: background 0.3s, transform 0.3s;
-    padding: 1rem 0;
-    background-clip: content-box;
-    transform-origin: center;
-  }
-
-  .carousel-dot.active {
-    background: var(--color-accent);
-    background-clip: content-box;
-    transform: scaleX(1.5);
-  }
-
-  .carousel-dot:hover:not(.active) {
-    background: var(--color-text-muted);
-    background-clip: content-box;
-  }
-
-  .carousel-arrows {
-    display: flex;
-    gap: 0.5rem;
-  }
-
-  .carousel-arrow {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: 1px solid var(--color-border);
-    background: var(--color-bg-card);
-    color: var(--color-text-dark);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: border-color 0.2s, background 0.2s, color 0.2s, opacity 0.2s;
-  }
-
-  .carousel-arrow:hover:not(:disabled),
-  .carousel-arrow:active:not(:disabled) {
-    border-color: var(--color-accent);
-    background: var(--color-accent);
-    color: var(--color-text-light);
-  }
-
-  .carousel-arrow:disabled {
-    opacity: 0.3;
-    cursor: default;
-  }
-
-  /* Tablet: collapse sidebar into horizontal strip */
-  @media (max-width: 1024px) {
-    .carousel-layout {
-      grid-template-columns: 1fr;
-      gap: 1.25rem;
-    }
-
-    .gallery {
-      flex-direction: row;
-      overflow-x: auto;
-      gap: 0.25rem;
-      position: static;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      padding-bottom: 0.25rem;
-      mask-image: linear-gradient(to right, transparent 0, black 0.5rem, black calc(100% - 2rem), transparent 100%);
-      -webkit-mask-image: linear-gradient(to right, transparent 0, black 0.5rem, black calc(100% - 2rem), transparent 100%);
-    }
-
-    .gallery::-webkit-scrollbar {
-      display: none;
-    }
-
-    .gallery-item {
-      flex-shrink: 0;
-    }
-
-    .gallery-item::before {
-      left: 50%;
-      top: auto;
-      bottom: 0;
-      transform: translateX(-50%) scaleX(0);
-      width: 60%;
-      height: 2px;
-      border-radius: 2px 2px 0 0;
-    }
-
-    .gallery-item.active::before {
-      transform: translateX(-50%) scaleX(1);
-    }
   }
 
   /* Mobile */
   @media (max-width: 768px) {
     .projects {
-      padding-inline: 1.25rem;
-    }
-
-    .gallery-item {
-      padding: 0.6rem 0.875rem;
-      border-radius: var(--radius-md);
-    }
-
-    .gallery-icon {
-      width: 22px;
-      height: 22px;
-    }
-
-    .gallery-status {
-      display: none;
-    }
-
-    .gallery-name {
-      font-size: 0.8rem;
+      padding-inline: var(--space-section-inline);
     }
 
     .project-card {
-      padding: 2rem 1.5rem;
+      padding: var(--space-lg) 1.5rem;
       min-height: auto;
     }
 
@@ -525,108 +255,19 @@ const projects = [
     }
 
     .project-highlight {
-      font-size: 0.8rem;
+      font-size: var(--text-sm);
     }
   }
 </style>
 
 <script>
-  const track = document.getElementById('projects-track') as HTMLElement;
-  const dots = document.querySelectorAll('#projects-dots .carousel-dot');
-  const galleryItems = document.querySelectorAll('#projects-gallery .gallery-item');
-  const prevBtn = document.getElementById('projects-prev') as HTMLButtonElement;
-  const nextBtn = document.getElementById('projects-next') as HTMLButtonElement;
-  const total = galleryItems.length;
-  let current = 0;
-  let startX = 0;
-  let isDragging = false;
-
-  function goTo(index: number) {
-    current = Math.max(0, Math.min(index, total - 1));
-    track.style.transform = `translateX(-${current * 100}%)`;
-    dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
-    galleryItems.forEach((item, i) => item.classList.toggle('active', i === current));
-    const atStart = current === 0;
-    const atEnd = current === total - 1;
-    prevBtn.disabled = atStart;
-    nextBtn.disabled = atEnd;
-  }
-
-  // Gallery clicks
-  galleryItems.forEach((item) => {
-    item.addEventListener('click', () => goTo(Number((item as HTMLElement).dataset.index)));
+  import { initCarousel } from '../scripts/carousel';
+  initCarousel({
+    trackId: 'projects-track',
+    dotsSelector: '#projects-dots .carousel-dot',
+    gallerySelector: '#projects-gallery .gallery-item',
+    prevBtnId: 'projects-prev',
+    nextBtnId: 'projects-next',
+    carouselId: 'projects-carousel',
   });
-
-  prevBtn.addEventListener('click', () => goTo(current - 1));
-  nextBtn.addEventListener('click', () => goTo(current + 1));
-  dots.forEach((dot) => {
-    dot.addEventListener('click', () => goTo(Number((dot as HTMLElement).dataset.index)));
-  });
-
-  // Keyboard
-  document.getElementById('projects-carousel')!.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') goTo(current - 1);
-    if (e.key === 'ArrowRight') goTo(current + 1);
-  });
-
-  // Touch / pointer swipe
-  track.addEventListener('pointerdown', (e) => {
-    if ((e.target as HTMLElement).closest('a')) return;
-    startX = e.clientX;
-    isDragging = true;
-    track.style.transition = 'none';
-    track.setPointerCapture(e.pointerId);
-  });
-
-  track.addEventListener('pointerup', (e) => {
-    if (!isDragging) return;
-    isDragging = false;
-    track.style.transition = '';
-    const diff = e.clientX - startX;
-    if (Math.abs(diff) > 60) {
-      goTo(current + (diff < 0 ? 1 : -1));
-    } else {
-      goTo(current);
-    }
-  });
-
-  track.addEventListener('pointercancel', () => {
-    isDragging = false;
-    track.style.transition = '';
-    goTo(current);
-  });
-
-  // Auto-advance (disabled for prefers-reduced-motion)
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let autoplay: ReturnType<typeof setInterval> | null = null;
-  let userPaused = false;
-  function startAutoplay() {
-    if (prefersReducedMotion || userPaused) return;
-    stopAutoplay();
-    autoplay = setInterval(() => {
-      if (current < total - 1) goTo(current + 1);
-      else stopAutoplay();
-    }, 5000);
-  }
-
-  function stopAutoplay() {
-    if (autoplay) { clearInterval(autoplay); autoplay = null; }
-  }
-
-  const carousel = document.getElementById('projects-carousel')!;
-  const layout = carousel.closest('.carousel-layout')!;
-  layout.addEventListener('pointerenter', stopAutoplay);
-  layout.addEventListener('pointerleave', () => { if (!userPaused) startAutoplay(); });
-  layout.addEventListener('focusin', stopAutoplay);
-  layout.addEventListener('focusout', () => { if (!userPaused) startAutoplay(); });
-
-  // Pause autoplay when tab is hidden
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) stopAutoplay();
-    else if (!userPaused) startAutoplay();
-  });
-
-  if (prefersReducedMotion) userPaused = true;
-  startAutoplay();
-  goTo(0);
 </script>
